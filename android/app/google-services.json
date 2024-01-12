@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "140500355589",
+    "project_id": "tailmate-cd79c",
+    "storage_bucket": "tailmate-cd79c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:140500355589:android:6f773dd9265f8101836a6c",
+        "android_client_info": {
+          "package_name": "com.example.tailmate"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYlcVx4eKy0l7y2ZFCNE-NSQLRXRrYBew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
