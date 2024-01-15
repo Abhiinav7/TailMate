@@ -1,8 +1,26 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:tailmate/controller/firebaseAuthController.dart';
+import 'package:tailmate/controller/mainController.dart';
+import 'package:tailmate/firebase_options.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:tailmate/view/Login_page/login_page.dart';
+import 'package:tailmate/view/MainPage/mainScreen.dart';
+import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
+import 'package:tailmate/view/signup_page/signup_screen.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform
+  );
+  runApp(MultiProvider(
+      providers: [
+ChangeNotifierProvider(create:  (context) => FirebaseAuthController(),),
+ChangeNotifierProvider(create:  (context) => MainController(),),
+      ],
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,7 +36,15 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigoAccent),
         useMaterial3: true,
       ),
-      home: const OnboardScreen(),
+      //home: const OnboardScreen(),
+      routes: {
+        "/onBoard":(context) =>OnboardScreen(),
+        "/login":(context) =>LoginScreen(),
+        "/create":(context) =>SignupScreen(),
+        "/main":(context) =>MainScreen(),
+
+      },
+      initialRoute:'/onBoard',
     );
   }
 }

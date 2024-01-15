@@ -1,20 +1,25 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
 import 'package:tailmate/Utils/constants/images.dart';
 import 'package:tailmate/Utils/constants/texts.dart';
+import 'package:tailmate/controller/firebaseAuthController.dart';
+import 'package:tailmate/services/validation_services.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
 import 'package:tailmate/widgets/CustomContainer.dart';
 import 'package:tailmate/widgets/CustomTextfield.dart';
 import 'package:tailmate/widgets/customDivider.dart';
 
 class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+   LoginScreen({super.key});
+  final _formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController emailController = TextEditingController();
-    TextEditingController passController = TextEditingController();
+
     double screenWidth = ScreenUtil.Width(context);
     double screenHeight = ScreenUtil.Height(context);
     return Scaffold(
@@ -33,9 +38,9 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         Image(
                             fit: BoxFit.contain,
-                            height: 90,
-                            width: 120,
-                            image: AssetImage(ImagesUsed.logo)),
+                            height: 110,
+                            width: 140,
+                            image: AssetImage(ImagesUsed.brand)),
                       ],
                     ),
                     Row(
@@ -81,99 +86,130 @@ class LoginScreen extends StatelessWidget {
                   height: 60,
                 ),
                 Form(
-                    child: Column(
-                  children: [
-                    CustomContainer(
-                      screenWidth: screenWidth,
-                      textfield: MyTextfields(
-                        prefixIcon: Icon(Icons.email_outlined),
-                        keyboardType: TextInputType.emailAddress,
-                        controller: emailController,
-                        validator: (value) {},
-                        hintText: 'E-mail ',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 12,
-                    ),
-                    CustomContainer(
-                      screenWidth: screenWidth,
-                      textfield: MyTextfields(
-                        suffixIcon: IconButton(
-                            onPressed: () {},
-                            icon: Icon(
-                              Icons.remove_red_eye_outlined,
-                            )),
-                        prefixIcon: Icon(Icons.password_sharp),
-                        keyboardType: TextInputType.emailAddress,
-                        controller: passController,
-                        validator: (value) {},
-                        hintText: 'Password ',
-                        obscureText: true,
-                      ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Checkbox(value: true, onChanged: (v) {}),
-                            const Text("Remember me")
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            TextButton(
-                                onPressed: () {},
-                                child: Text("Forgot password"))
-                          ],
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: 45,
-                    ),
-                    Container(
-                        height: 45,
-                        width: screenWidth,
-                        child: ElevatedButton(
-                            onPressed: () {}, child: Text("Sign in"))),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Container(
-                        height: 45,
-                        width: screenWidth,
-                        child: OutlinedButton(
-                            onPressed: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen(),));
-                            }, child: Text("Create Account"))),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    CustomDivider(dividerText: 'or Sign in with',),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          child: IconButton(
-                            icon: Image(
-                              height: 30,
-                              width: 30,
-                              image: AssetImage(
-                                ImagesUsed.GoogleLogo,
-                              ),
-                            ),
-                            onPressed: () {},
-                          ),
-                        )
-                      ],
+                  key: _formkey,
+                    child: Consumer<FirebaseAuthController>(
+                     builder: (context, AuthController, child) => Column(
+                       children: [
+                         CustomContainer(
+                           screenWidth: screenWidth,
+                           textfield: MyTextfields(
+                             prefixIcon: Image.asset("assets/icons/mail.png"),
+                             keyboardType: TextInputType.emailAddress,
+                             controller: AuthController.logEmailController,
+                             validator:(value)=> Validation.validateEmail(value!),
+                             hintText: 'E-mail ',
+                           ),
+                         ),
+                         SizedBox(
+                           height: 12,
+                         ),
+                         CustomContainer(
+                           screenWidth: screenWidth,
+                           textfield: MyTextfields(
+                             suffixIcon: AuthController.isVisible?
+                             IconButton(
+                               icon: Icon(
+                                 CupertinoIcons.eye_slash ,
+                               ),
+                               onPressed: () {
+                                 AuthController.visibleChange();
+                               },
+                             )
+                                 :
+                             IconButton(
+                               icon: Icon(
+                                 Icons.remove_red_eye_outlined,
+                               ),
+                               onPressed: () {
+                                 AuthController.visibleChange();
+                               },
+                             ),
+                             prefixIcon: Image.asset("assets/icons/password.png"),
+                             keyboardType: TextInputType.emailAddress,
+                             controller: AuthController.logPassController,
+                             validator:(value)=> Validation.validatePassword(value!),
+                             hintText: 'Password ',
+                             obscureText: AuthController.isVisible,
+                           ),
+                         ),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                           children: [
+                             Row(
+                               children: [
+                                 Checkbox(
+                                     value: AuthController.isChecked,
+                                     onChanged: (v) {
+                                       AuthController.rememberChange(v!);
+                                     }
+                                 ),
+                                 const Text("Remember me")
+                               ],
+                             ),
+                             Row(
+                               children: [
+                                 TextButton(
+                                     onPressed: () {},
+                                     child: Text("Forgot password"))
+                               ],
+                             )
+                           ],
+                         ),
+                         SizedBox(
+                           height: 45,
+                         ),
+                         Container(
+                             height: 45,
+                             width: screenWidth,
+                             child: ElevatedButton(
+                                 onPressed: () {
+                                   if(_formkey.currentState!.validate()){
+                                     _formkey.currentState!.save();
+                                     AuthController.loginUser(context);
+                                     AuthController.logEmailController.clear();
+                                     AuthController.logPassController.clear();
+                                   }
+                                 }, child: Text("Sign in"))),
+                         SizedBox(
+                           height: 15,
+                         ),
+                         Container(
+                             height: 45,
+                             width: screenWidth,
+                             child: OutlinedButton(
+                                 onPressed: () {
+                                   Navigator.push(context, MaterialPageRoute(builder: (context) => SignupScreen(),));
+                                 }, child: Text("Create Account"))),
+                         SizedBox(
+                           height: 40,
+                         ),
+                         CustomDivider(dividerText: 'or Sign in with',),
+                         Row(
+                           mainAxisAlignment: MainAxisAlignment.center,
+                           children: [
+                             Container(
+                               decoration: BoxDecoration(
+                                 borderRadius: BorderRadius.circular(100),
+                               ),
+                               child: IconButton(
+                                 icon: Image(
+                                   height: 30,
+                                   width: 30,
+                                   image: AssetImage(
+                                     ImagesUsed.GoogleLogo,
+                                   ),
+                                 ),
+                                 onPressed: () {
+                                   AuthController.signInWithGoogle(context);
+                                 },
+                               ),
+                             )
+                           ],
+                         )
+                       ],
+                     ),
                     )
-                  ],
-                ))
+                )
               ],
             ),
           ),

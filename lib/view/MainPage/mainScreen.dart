@@ -1,0 +1,30 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tailmate/controller/mainController.dart';
+import 'package:tailmate/view/MainPage/pages/add_pet.dart';
+import 'package:tailmate/view/MainPage/pages/home.dart';
+import 'package:tailmate/view/MainPage/pages/profile.dart';
+import 'package:tailmate/view/MainPage/pages/wishlist.dart';
+
+
+import 'package:tailmate/view/MainPage/widgets/google_navbar.dart';
+class MainScreen extends StatelessWidget {
+   MainScreen({super.key});
+   final List<Widget> pages=[
+     HomeScreen(),
+     AddPetScreen(),
+     WishlistPets(),
+     MyProfile()
+   ];
+  @override
+  Widget build(BuildContext context) {
+
+    final controller=Provider.of<MainController>(context);
+    return Scaffold(
+      backgroundColor: Colors.white,
+      bottomNavigationBar:GoogleNavbar(
+        onTabChange: (int value ) => controller.changeScreen(value),),
+body: pages[controller.selectedIndex],
+    );
+  }
+}

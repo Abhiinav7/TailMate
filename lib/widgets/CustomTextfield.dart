@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class MyTextfields extends StatelessWidget {
   final TextEditingController controller;
   final bool? obscureText;
-  final String? Function(String?)? validator;
+  final dynamic validator;
   final TextInputType? keyboardType;
   final String? hintText;
   final TextStyle? hintStyle;
@@ -29,6 +29,7 @@ class MyTextfields extends StatelessWidget {
       controller: controller,
       obscureText: obscureText ?? false,
       decoration: InputDecoration(
+          errorStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.w400,),
           suffixIcon: suffixIcon,
           hintText: hintText,
           hintStyle: hintStyle,
