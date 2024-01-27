@@ -13,4 +13,10 @@ class ScreenUtil {
         .size
         .height;
   }
+
+  static double Text(BuildContext context) {
+    return MediaQuery
+        .of(context)
+        .textScaleFactor;
+  }
 }

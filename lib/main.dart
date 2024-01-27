@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/firebaseAuthController.dart';
+import 'package:tailmate/controller/userController.dart';
+import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/firebase_options.dart';
@@ -21,6 +23,8 @@ void main() async {
 ChangeNotifierProvider(create:  (context) => FirebaseAuthController(),),
 ChangeNotifierProvider(create:  (context) => MainController(),),
 ChangeNotifierProvider(create:  (context) => LocationController(),),
+ChangeNotifierProvider(create:  (context) => UserController(),),
+ChangeNotifierProvider(create:  (context) => PetController(),),
       ],
   child: const MyApp()));
 }

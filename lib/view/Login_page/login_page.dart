@@ -90,22 +90,21 @@ class LoginScreen extends StatelessWidget {
                     child: Consumer<FirebaseAuthController>(
                      builder: (context, AuthController, child) => Column(
                        children: [
-                         CustomContainer(
-                           screenWidth: screenWidth,
-                           textfield: MyTextfields(
+                       MyTextfields(
+                         horizontalPadding: 8,
+                             verticalPadding: 15,
                              prefixIcon: Image.asset("assets/icons/mail.png"),
                              keyboardType: TextInputType.emailAddress,
                              controller: AuthController.logEmailController,
                              validator:(value)=> Validation.validateEmail(value!),
                              hintText: 'E-mail ',
                            ),
-                         ),
                          SizedBox(
                            height: 12,
                          ),
-                         CustomContainer(
-                           screenWidth: screenWidth,
-                           textfield: MyTextfields(
+                         MyTextfields(
+                           horizontalPadding: 8,
+                           verticalPadding: 15,
                              suffixIcon: AuthController.isVisible?
                              IconButton(
                                icon: Icon(
@@ -130,7 +129,7 @@ class LoginScreen extends StatelessWidget {
                              validator:(value)=> Validation.validatePassword(value!),
                              hintText: 'Password ',
                              obscureText: AuthController.isVisible,
-                           ),
+
                          ),
                          Row(
                            mainAxisAlignment: MainAxisAlignment.spaceBetween,

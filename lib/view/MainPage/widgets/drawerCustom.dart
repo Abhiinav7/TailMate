@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
-import 'package:tailmate/controller/mainController.dart';
+import 'package:tailmate/controller/firebaseAuthController.dart';
+import 'package:tailmate/controller/userController.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<MainController>(context);
+    final controller = Provider.of<UserController>(context);
+    final firebaseController = Provider.of<FirebaseAuthController>(context);
     double screenWidth = ScreenUtil.Width(context);
     return Drawer(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -107,7 +109,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,
-            onTap: () {},
+            onTap: () {
+              firebaseController.signOut(context);
+            },
             title: Text(
               "Logout",
               style: TextStyle(fontSize: 20),

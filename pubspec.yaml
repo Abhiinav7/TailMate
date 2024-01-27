@@ -49,6 +49,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   geolocator: ^10.1.0
   geocoding: ^2.1.1
+  dropdown_search: ^5.0.6
 
 
 dev_dependencies:
@@ -79,6 +80,7 @@ flutter:
      - assets/onboard/
      - assets/icons/
      - assets/images/
+     - assets/pets/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

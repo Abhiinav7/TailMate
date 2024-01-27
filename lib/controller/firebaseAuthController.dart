@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:tailmate/controller/firebaseCloudstore.dart';
+import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/model/userModel.dart';
 
 class FirebaseAuthController extends ChangeNotifier {
@@ -14,7 +14,7 @@ class FirebaseAuthController extends ChangeNotifier {
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController logPassController = TextEditingController();
   final TextEditingController logEmailController = TextEditingController();
-  FirebaseCloudController firebaseCloudController = FirebaseCloudController();
+  UserController firebaseCloudController = UserController();
 
 //for viewing password on login screen
   bool _isVisible = true;
@@ -158,5 +158,14 @@ class FirebaseAuthController extends ChangeNotifier {
     }
     notifyListeners();
     return null;
+  }
+
+
+  signOut(BuildContext context) async {
+    final navigator = Navigator.of(context);
+
+    await FirebaseAuth.instance.signOut();
+    navigator
+        .pushReplacementNamed("/login");
   }
 }
