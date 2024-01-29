@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tailmate/model/userModel.dart';
 
 class UserController extends ChangeNotifier {
+
   CollectionReference collectionReference =
   FirebaseFirestore.instance.collection("user");
 
@@ -17,7 +18,7 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  String name = "";
+  String name ="";
   String email = "";
   Future fetchData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -31,7 +32,7 @@ class UserController extends ChangeNotifier {
       notifyListeners();
       email = data.email;
       notifyListeners();
-
+return data;
     }
   }
 

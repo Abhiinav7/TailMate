@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,7 +8,6 @@ import 'package:tailmate/Utils/constants/texts.dart';
 import 'package:tailmate/controller/firebaseAuthController.dart';
 import 'package:tailmate/services/validation_services.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
-import 'package:tailmate/widgets/CustomContainer.dart';
 import 'package:tailmate/widgets/CustomTextfield.dart';
 import 'package:tailmate/widgets/customDivider.dart';
 
@@ -96,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                              prefixIcon: Image.asset("assets/icons/mail.png"),
                              keyboardType: TextInputType.emailAddress,
                              controller: AuthController.logEmailController,
-                             validator:(value)=> Validation.validateEmail(value!),
+                             validator:(value)=> Validation.validateEmail(value),
                              hintText: 'E-mail ',
                            ),
                          SizedBox(
@@ -126,7 +124,7 @@ class LoginScreen extends StatelessWidget {
                              prefixIcon: Image.asset("assets/icons/password.png"),
                              keyboardType: TextInputType.emailAddress,
                              controller: AuthController.logPassController,
-                             validator:(value)=> Validation.validatePassword(value!),
+                             validator:(value)=> Validation.validatePassword(value),
                              hintText: 'Password ',
                              obscureText: AuthController.isVisible,
 

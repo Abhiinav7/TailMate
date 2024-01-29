@@ -7,8 +7,15 @@ class PetModel {
   String discription;
   String imageUrl;
   String petId;
+  String petType;
+  String userId;
+  // String userName;
 
-  PetModel({
+  PetModel(
+      {
+        // required this.userName,
+        required this.userId,
+      required this.petType,
       required this.petName,
       required this.breed,
       required this.gender,
@@ -19,15 +26,18 @@ class PetModel {
       required this.petId});
 
   factory PetModel.fromJson(Map<String, dynamic> json) => PetModel(
-        petName: json["petName"],
-        breed: json["breed"],
-        gender: json["gender"],
-        imageUrl: json["imageUrl"],
-        age: json["age"],
-        weight: json["weight"],
-        discription: json["discription"],
-        petId: json["petId"],
-      );
+      petName: json["petName"],
+      breed: json["breed"],
+      gender: json["gender"],
+      imageUrl: json["imageUrl"],
+      age: json["age"],
+      weight: json["weight"],
+      discription: json["discription"],
+      petType: json["petType"],
+      petId: json["petId"],
+      userId: json["userId"],
+  // userName: json["userName"]
+  );
 
   Map<String, dynamic> toJson() => {
         "petName": petName,
@@ -37,6 +47,9 @@ class PetModel {
         "age": age,
         "weight": weight,
         "discription": discription,
+        "petType": petType,
         "petId": petId,
+        "userId": userId,
+    // "userName":userName
       };
 }

@@ -11,8 +11,11 @@ class MyTextfields extends StatelessWidget {
   final Widget? suffixIcon;
 final double horizontalPadding;
 double verticalPadding;
+  String? labelText;
+  final String? suffixText;
    MyTextfields(
       {super.key,
+     this.suffixText,
         this.horizontalPadding=5,
         this.verticalPadding=5,
       this.suffixIcon,
@@ -22,7 +25,8 @@ double verticalPadding;
       required this.keyboardType,
       required this.hintText,
       this.hintStyle,
-      this.prefixIcon});
+      this.prefixIcon,
+      this.labelText});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +55,12 @@ double verticalPadding;
               borderRadius: BorderRadius.circular(12)),
           errorStyle: TextStyle(fontSize: 12,fontWeight: FontWeight.w400,),
           suffixIcon: suffixIcon,
+          suffixText: suffixText,
           hintText: hintText,
           hintStyle: hintStyle,
           border: InputBorder.none,
-          prefixIcon: prefixIcon),
+          prefixIcon: prefixIcon,
+      labelText: labelText),
     );
   }
 }

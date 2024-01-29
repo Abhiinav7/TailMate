@@ -40,59 +40,179 @@ class AddPetScreen extends StatelessWidget {
                 child: Consumer<PetController>(
                   builder: (context, controller, child) => Column(
                     children: [
-                      MyTextfields(
-                        horizontalPadding: 8,
-                        verticalPadding: 16,
-                      validator: (value) => Validation.validateName(value!),
-                        controller: controller.petNameController,
-                        keyboardType: TextInputType.name,
-                        hintText: 'Enter Pet Name',
-
+                      controller.img == null
+                          ? Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.indigo,width: 2),
+                            borderRadius: BorderRadius.circular(100),
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: AssetImage("assets/logo/logo1.png")),
                       ),
+                      )
+                          : Container(
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(150),
+                                  image: DecorationImage(
+                                      fit: BoxFit.fill,
+                                      image: FileImage(controller.img!))),
+                            ),
                       SizedBox(
                         height: 15,
                       ),
-                      MyTextfields(
-                        horizontalPadding: 8,
-                        verticalPadding: 20,
-                          validator: (value) =>
-                              Validation.validateFields(value!),
-                          controller: controller.petDiscriptionController,
-                        keyboardType: TextInputType.name,
-                        hintText: 'About pet!',
-                         ),
+                      TextButton(
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStatePropertyAll(
+                                Colors.indigo.shade500)),
+                        onPressed: () {
+                          controller.imagePick();
+                        },
+                        child: Text(
+                          "choose image",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
                       SizedBox(
                         height: 15,
                       ),
                       DropdownSearch<String>(
-
+                        validator: (value) => Validation.validateFields(value!),
                         popupProps: PopupProps.menu(
-
                           showSelectedItems: true,
-                          disabledItemFn: (String s) => s.startsWith('I'),
                         ),
-                        items: ["Brazil", "Italia (Disabled)", "Tunisia", 'Canada'],
+                        items: controller.petTypesList,
                         dropdownDecoratorProps: DropDownDecoratorProps(
-
                           dropdownSearchDecoration: InputDecoration(
+                            icon: Icon(Icons.pets),
                             contentPadding: EdgeInsets.all(5),
-                            focusedBorder: OutlineInputBorder(),
-                            labelText: "Breed",
-                            hintText: "country in menu mode",
+                            labelText: "Pet Type",
                           ),
                         ),
-                        onChanged: print,
-                        selectedItem: "",
+                        onChanged: (String? value) {
+                          if (value != null) {
+                            controller.petTyp(value);
+                          }
+                        },
+                        selectedItem: " ",
                       ),
-
-
-                      TextButton(
-                          onPressed: () {
-                            if (petKey.currentState!.validate()) {
-                              petKey.currentState!.save();
-                            }
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MyTextfields(
+                        labelText: "Pet name",
+                        horizontalPadding: 8,
+                        verticalPadding: 16,
+                        validator: (value) => Validation.validateName(value!),
+                        controller: controller.petNameController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Enter Pet Name',
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MyTextfields(
+                        labelText: "breed",
+                        horizontalPadding: 8,
+                        verticalPadding: 15,
+                        validator: (value) => Validation.validateFields(value!),
+                        controller: controller.petBreedController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Enter breed name',
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MyTextfields(
+                        labelText: "Discription",
+                        horizontalPadding: 8,
+                        verticalPadding: 20,
+                        validator: (value) => Validation.validateFields(value!),
+                        controller: controller.petDiscriptionController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'About pet!',
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: [
+                          Text("Gender"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: RadioListTile(
+                          title: const Text('Male'),
+                          value: "male",
+                          groupValue: controller.petGender,
+                          onChanged: (String? value) {
+                            controller.petGen(value!);
                           },
-                          child: Text("Sell Pet"))
+                        ),
+                      ),
+                      SizedBox(
+                        height: 45,
+                        child: RadioListTile(
+                          title: const Text('Female'),
+                          value: "female",
+                          groupValue: controller.petGender,
+                          onChanged: (String? value) {
+                            controller.petGen(value!);
+                          },
+                        ),
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MyTextfields(
+                        suffixText: "years",
+                        labelText: "Age",
+                        horizontalPadding: 8,
+                        verticalPadding: 15,
+                        validator: (value) => Validation.validateFields(value!),
+                        controller: controller.petAgeController,
+                        keyboardType:
+                            TextInputType.numberWithOptions(decimal: true),
+                        hintText: 'Enter pet age',
+                      ),
+                      SizedBox(
+                        height: 15,
+                      ),
+                      MyTextfields(
+                        suffixText: "Kg",
+                        labelText: "Weight",
+                        horizontalPadding: 8,
+                        verticalPadding: 15,
+                        validator: (value) => Validation.validateFields(value!),
+                        controller: controller.petWeightController,
+                        keyboardType: TextInputType.name,
+                        hintText: 'Enter pet weight',
+                      ),
+                      SizedBox(
+                        height: 25,
+                      ),
+                      Container(
+                        width: 250,
+                        child: TextButton(
+                            style: ButtonStyle(
+                                backgroundColor: MaterialStatePropertyAll(
+                                    Colors.indigo.shade400)),
+                            onPressed: () {
+                              if (petKey.currentState!.validate()) {
+                                petKey.currentState!.save();
+                                controller.addPetData(
+                                    controller.imageName, controller.files);
+                              }
+                            },
+                            child: Text(
+                              "Sell Pet",
+                              style: TextStyle(color: Colors.white),
+                            )),
+                      )
                     ],
                   ),
                 ),

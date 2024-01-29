@@ -13,6 +13,7 @@ class MyDrawer extends StatelessWidget {
     final firebaseController = Provider.of<FirebaseAuthController>(context);
     double screenWidth = ScreenUtil.Width(context);
     return Drawer(
+
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       backgroundColor: Colors.indigo.shade50,
       width: screenWidth - 70,
@@ -20,40 +21,23 @@ class MyDrawer extends StatelessWidget {
       // shadowColor: Colors.red,
       child: ListView(
         children: [
-          DrawerHeader(
-              padding: EdgeInsets.zero,
-              child: Container(
-                padding: EdgeInsets.only(left: 10),
-                color: Colors.indigo.shade600,
-                child: Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage(
-                        "assets/images/person.jpg",
-                      ),
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          controller.name,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.w500),
-                        ),
-                        Text(controller.email,
-                            style: TextStyle(color: Colors.white, fontSize: 15))
-                      ],
-                    )
-                  ],
-                ),
-              )),
+          UserAccountsDrawerHeader(
+            currentAccountPicture: CircleAvatar(
+              radius: 30,
+              backgroundImage: AssetImage(
+                "assets/images/person.jpg",
+              ),
+            ),
+            accountName: Text(
+              controller.name,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500),
+            ),
+            accountEmail: Text(controller.email,
+                style: TextStyle(color: Colors.white, fontSize: 15)),
+          ),
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,

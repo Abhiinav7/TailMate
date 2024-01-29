@@ -15,10 +15,10 @@ class PrimaryHeaderContainer extends StatelessWidget {
     return CurvedWidget(
       child: Container(
         width: screenWidth,
-        color: Colors.indigo.shade600,
+        color: Colors.indigo.shade500,
         padding: EdgeInsets.all(0),
         child: SizedBox(
-          height: 285,
+          height: 300,
           child: Stack(
               children: [
                 Positioned(

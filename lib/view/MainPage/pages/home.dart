@@ -1,13 +1,18 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
+import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';
 import 'package:tailmate/view/MainPage/components/pet_card/petcard.dart';
+import 'package:tailmate/view/MainPage/components/shimmer_effects/customShimmer.dart';
 import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
 import 'package:tailmate/view/MainPage/widgets/drawerCustom.dart';
 import 'package:tailmate/view/MainPage/widgets/vertical-categoryList.dart';
@@ -30,7 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget build(BuildContext context) {
     final location = Provider.of<LocationController>(context);
-    final controller = Provider.of<UserController>(context);
+    final userController = Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
     double screenHeight = ScreenUtil.Height(context);
     return Scaffold(
@@ -59,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            controller.name,
+                            userController.name,
                             style: TextStyle(
                                 fontSize: screenWidth / 20,
                                 color: Colors.white.withOpacity(0.7)),
@@ -133,7 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
               Row(
                 children: [
                   Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: screenWidth / 19.6),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: screenWidth / 19.6),
                     child: Text(
                       "Adopt Me!",
                       style: TextStyle(
@@ -144,18 +150,120 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ],
               ),
-              GridView.builder(
-                padding: EdgeInsets.all(screenWidth / 26.13),
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 5,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisExtent: screenHeight * 0.32,
-                  crossAxisSpacing: screenWidth / 32.66,
-                  mainAxisSpacing: screenWidth / 32.66,
-                ),
-                itemBuilder: (context, index) => PetCard(),
+              StreamBuilder(
+                stream: FirebaseFirestore.instance.collection("pets").snapshots(),
+                builder: (context, snapshot) {
+             if(snapshot.hasData){
+               return GridView.builder(
+                   padding: EdgeInsets.all(screenWidth / 26.13),
+                   physics: NeverScrollableScrollPhysics(),
+                   shrinkWrap: true,
+                   itemCount: snapshot.data!.docs.length,
+                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                     crossAxisCount: 2,
+                     mainAxisExtent: 226,
+                     crossAxisSpacing: screenWidth / 32.66,
+                     mainAxisSpacing: screenWidth / 32.66,
+                   ),
+                   itemBuilder: (context, index) {
+                     final data=snapshot.data!.docs[index];
+                     return GestureDetector(
+                       onTap: () {
+                         print(screenHeight);
+                       },
+                       child: Container(
+                         decoration: BoxDecoration(
+                             border: Border.all(color: Colors.indigo.shade300, width: 3),
+                             borderRadius: BorderRadius.circular(18),
+                             color: Colors.grey.shade200,
+                             boxShadow: [
+                               BoxShadow(
+                                   offset: Offset(2, 2),
+                                   spreadRadius: 2,
+                                   blurRadius: 2,
+                                   color: Colors.indigo.withOpacity(0.3))
+                             ]),
+                         child: Column(
+                           children: [
+                             Container(
+                               width: screenWidth / 3.01,
+                               height: 142,
+                               margin: EdgeInsets.only(top: 6),
+                               padding: EdgeInsets.all(3),
+                               decoration: BoxDecoration(
+                                   // color: Colors.grey.shade700,
+                                 // image: DecorationImage(
+                                 //   fit: BoxFit.fill,
+                                 //     image: NetworkImage(data["imageUrl"])),
+                                 //   borderRadius: BorderRadius.circular(18)
+                                   ),
+                               child: ClipRRect(
+                                 borderRadius: BorderRadius.circular(12.0),
+                                 child: CachedNetworkImage(
+                                   placeholder: (context, url) => MyShimmer(
+                                     height:142 ,width:screenWidth / 3.01 ,radious: 12,
+                                     color: Colors.grey,
+                                   ),
+                                   errorWidget: (context, url, error) => Icon(Icons.error),
+                                   fit: BoxFit.cover,
+                                     imageUrl:data["imageUrl"],),
+                               ),
+                             ),
+                             Padding(
+                               padding: EdgeInsets.only(left: 5, ),
+                               child: Text(
+                                 data["petName"],
+                                 style: TextStyle(
+                                     color: Colors.black,
+                                     fontWeight: FontWeight.w600,
+                                     fontSize: 16),
+                                 textAlign: TextAlign.left,
+                                 overflow: TextOverflow.ellipsis,
+                                 maxLines: 1,
+                               ),
+                             ),
+                             Row(
+                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                               children: [
+                                 Expanded(
+                                   child: Padding(
+                                     padding:  EdgeInsets.only(left: screenWidth / 78.4),
+                                     child: Text(
+                                       data["breed"],
+                                       style: TextStyle(
+                                           color: Colors.black,
+                                           fontWeight: FontWeight.w500,
+                                           fontSize: 14),
+                                       textAlign: TextAlign.left,
+                                       overflow: TextOverflow.ellipsis,
+                                       maxLines: 2,
+                                     ),
+                                   ),
+                                 ),
+                                 IconButton(
+                                     style: ButtonStyle(
+                                         iconColor:
+                                         MaterialStatePropertyAll(Colors.red.shade600),
+                                         iconSize: MaterialStatePropertyAll(30)),
+                                     onPressed: () {
+                                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                           behavior: SnackBarBehavior.floating,
+                                           content: Text("H=${screenHeight} & W=${screenWidth}")));
+                                     },
+                                     icon: Icon(Icons.favorite_border)),
+                               ],
+                             )
+                           ],
+                         ),
+                       ),
+                     );
+                   });
+             }
+             else{
+               return Container();
+             }
+                }
               )
             ],
           ),
