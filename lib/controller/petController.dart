@@ -7,10 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/model/petModel.dart';
-import 'package:tailmate/model/userModel.dart';
 
 class PetController extends ChangeNotifier {
-  UserController userController=UserController();
+  UserController userController = UserController();
   final List<String> petTypesList = [
     "Cat",
     "Dog",
@@ -43,15 +42,37 @@ class PetController extends ChangeNotifier {
 
   CollectionReference collectionReference =
       FirebaseFirestore.instance.collection("pets");
+  CollectionReference userCollection =
+      FirebaseFirestore.instance.collection("user");
   final userId = FirebaseAuth.instance.currentUser!.uid;
-
 
   File? img;
   String imageName = " ";
   late XFile files;
+
 // UserModel? userModel;
   //function for picking image from gallery
-  Future<Object> imagePick() async {
+  Future<Object> imagePickCamera() async {
+    ImagePicker imagePicker = ImagePicker();
+    XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
+    files = file!;
+    notifyListeners();
+    print('${file?.path}');
+    if (file == null) return "";
+    final imgTemp = File(file.path);
+    this.img = imgTemp;
+    notifyListeners();
+    String imgName = DateTime.now().millisecondsSinceEpoch.toString();
+    imageName = imgName;
+    notifyListeners();
+    // Map<String,dynamic> data=userController.fetchData() as Map<String, dynamic>;
+    // userModel=data as UserModel?;
+    notifyListeners();
+    // final imgUrl=addPetData(imgName, file);
+    return file;
+  }
+
+  Future<Object> imagePickGallery() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
     files = file!;
@@ -84,17 +105,17 @@ class PetController extends ChangeNotifier {
       var imageUrl = await referenceImageToUpload.getDownloadURL();
       print(imageUrl);
       final petData = PetModel(
-          petType: _petType,
-          petName: petNameController.text,
-          breed: petBreedController.text,
-          gender: petGender,
-          age: int.parse(petAgeController.text),
-          weight: double.parse(petWeightController.text),
-          discription: petDiscriptionController.text,
-          imageUrl: imageUrl,
-          petId: collectionReference.doc().id,
-          userId: userId,
-          );
+        petType: _petType,
+        petName: petNameController.text,
+        breed: petBreedController.text,
+        gender: petGender,
+        age: int.parse(petAgeController.text),
+        weight: double.parse(petWeightController.text),
+        discription: petDiscriptionController.text,
+        imageUrl: imageUrl,
+        petId: collectionReference.doc().id,
+        userId: userId,
+      );
       addPetDetails(petData);
     } on FirebaseException catch (error) {
       print(error.code);
@@ -111,6 +132,18 @@ class PetController extends ChangeNotifier {
       collectionReference.add(petModel.toJson());
     } catch (e) {
       print("/////////////error$e");
+    }
+  }
+
+  Future addWishlist(String petName, String breed, String imageUrl) async {
+    try {
+      userCollection.doc(userId).collection("wishlist").doc().set({
+        "petName": petName,
+        "petBreed": breed,
+        "petImage": imageUrl,
+      });
+    } catch (e) {
+      print("///////////////error${e}");
     }
   }
 }

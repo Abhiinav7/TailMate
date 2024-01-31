@@ -22,7 +22,12 @@ class Validation {
     }
     return null;
   }
-
+  static String? validateDropList(String value) {
+    if (value==" ") {
+      return '  Field is empty';
+    }
+    return null;
+  }
   static String? validatePhone(String? value) {
     // String cleanedValue = value!.replaceAll(RegExp(r'[^0-9]'), '');
     if (value!.isEmpty) {

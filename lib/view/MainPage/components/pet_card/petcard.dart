@@ -1,13 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
+import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/view/MainPage/components/shimmer_effects/customShimmer.dart';
 
 class PetCard extends StatelessWidget {
-  const PetCard({
+   PetCard({
     super.key,
+    required this.imageUrl,
+    required this.breed,
+    required this.petName,
   });
-
+   String imageUrl;
+   String breed;
+   String petName;
   @override
   Widget build(BuildContext context) {
+    final petController=Provider.of<PetController>(context);
     double screenWidth = ScreenUtil.Width(context);
     double screenHeight = ScreenUtil.Height(context);
 
@@ -31,23 +41,32 @@ class PetCard extends StatelessWidget {
           children: [
             Container(
               width: screenWidth / 3.01,
-              height: screenHeight / 5.06,
+              height: 142,
               margin: EdgeInsets.only(top: 6),
               padding: EdgeInsets.all(3),
               decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover,
-                      image: AssetImage(
-                        "assets/pets/cat.jpg",
-                      )),
-                  // color: Colors.grey.shade700,
-                  borderRadius: BorderRadius.circular(15)),
+                // color: Colors.grey.shade700,
+                // image: DecorationImage(
+                //   fit: BoxFit.fill,
+                //     image: NetworkImage(data["imageUrl"])),
+                //   borderRadius: BorderRadius.circular(18)
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12.0),
+                child: CachedNetworkImage(
+                  placeholder: (context, url) => MyShimmer(
+                    height:142 ,width:screenWidth / 3.01 ,radious: 12,
+                    color: Colors.grey,
+                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  fit: BoxFit.cover,
+                  imageUrl:imageUrl),
+              ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 5, top: 5),
+              padding: EdgeInsets.only(left: 5, ),
               child: Text(
-                "Nemo"
-                ,
+                petName,
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w600,
@@ -60,12 +79,11 @@ class PetCard extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Expanded(
                   child: Padding(
                     padding:  EdgeInsets.only(left: screenWidth / 78.4),
                     child: Text(
-                      "Beagle",
+                      breed,
                       style: TextStyle(
                           color: Colors.black,
                           fontWeight: FontWeight.w500,
@@ -79,13 +97,10 @@ class PetCard extends StatelessWidget {
                 IconButton(
                     style: ButtonStyle(
                         iconColor:
-                            MaterialStatePropertyAll(Colors.red.shade600),
+                        MaterialStatePropertyAll(Colors.red.shade600),
                         iconSize: MaterialStatePropertyAll(30)),
                     onPressed: () {
-                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                       behavior: SnackBarBehavior.floating,
-                         content: Text("H=${screenHeight} & W=${screenWidth}")));
+                     petController.addWishlist(petName,breed,imageUrl);
                     },
                     icon: Icon(Icons.favorite_border)),
               ],

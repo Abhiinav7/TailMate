@@ -10,6 +10,7 @@ import 'package:tailmate/firebase_options.dart';
 
 import 'package:tailmate/view/Login_page/login_page.dart';
 import 'package:tailmate/view/MainPage/mainScreen.dart';
+import 'package:tailmate/view/MainPage/pages/home.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
         "/login":(context) =>LoginScreen(),
         "/create":(context) =>SignupScreen(),
         "/main":(context) =>MainScreen(),
+        "/home":(context) =>HomeScreen(),
 
       },
       initialRoute:'/onBoard',

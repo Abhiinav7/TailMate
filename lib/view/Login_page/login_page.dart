@@ -163,8 +163,6 @@ class LoginScreen extends StatelessWidget {
                                    if(_formkey.currentState!.validate()){
                                      _formkey.currentState!.save();
                                      AuthController.loginUser(context);
-                                     AuthController.logEmailController.clear();
-                                     AuthController.logPassController.clear();
                                    }
                                  }, child: Text("Sign in"))),
                          SizedBox(

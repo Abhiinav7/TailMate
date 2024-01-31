@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/services/validation_services.dart';
 import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
+import 'package:tailmate/view/MainPage/widgets/customBottomsheet.dart';
+import 'package:tailmate/view/MainPage/widgets/customButton.dart';
 import 'package:tailmate/widgets/CustomTextfield.dart';
 
 class AddPetScreen extends StatelessWidget {
@@ -42,21 +44,22 @@ class AddPetScreen extends StatelessWidget {
                     children: [
                       controller.img == null
                           ? Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.indigo,width: 2),
-                            borderRadius: BorderRadius.circular(100),
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage("assets/logo/logo1.png")),
-                      ),
-                      )
-                          : Container(
-                              height: 150,
-                              width: 150,
+                              height: 100,
+                              width: 100,
                               decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(150),
+                                border:
+                                    Border.all(color: Colors.indigo, width: 2),
+                                borderRadius: BorderRadius.circular(100),
+                                image: DecorationImage(
+                                    fit: BoxFit.cover,
+                                    image: AssetImage("assets/logo/logo1.png")),
+                              ),
+                            )
+                          : Container(
+                              height: 130,
+                              width: 130,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(130),
                                   image: DecorationImage(
                                       fit: BoxFit.fill,
                                       image: FileImage(controller.img!))),
@@ -64,23 +67,46 @@ class AddPetScreen extends StatelessWidget {
                       SizedBox(
                         height: 15,
                       ),
-                      TextButton(
-                        style: ButtonStyle(
-                            backgroundColor: MaterialStatePropertyAll(
-                                Colors.indigo.shade500)),
-                        onPressed: () {
-                          controller.imagePick();
-                        },
-                        child: Text(
-                          "choose image",
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      MyButton(
+                        text: "Choose Image",
+                        onTap:(){
+                          showModalBottomSheet<void>(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15.0),
+                                topRight: Radius.circular(15.0),
+                              ),
+                            ),
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SizedBox(
+                                height: 120,
+                                child: Center(
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                      children: [
+                                        MyButton(
+                                          height: 35,
+                                          width:200,
+                                            onTap: (){controller.imagePickCamera();}, text: "Camera"),
+                                        MyButton(
+                                            height: 35,
+                                            width:200,
+                                            onTap: (){controller.imagePickGallery();}, text: "Gallery"),
+                                      ],
+                                    )),
+                              );
+                            },
+                          );
+
+                        } ,
                       ),
                       SizedBox(
                         height: 15,
                       ),
                       DropdownSearch<String>(
-                        validator: (value) => Validation.validateFields(value!),
+                        validator: (value) =>
+                            Validation.validateDropList(value!),
                         popupProps: PopupProps.menu(
                           showSelectedItems: true,
                         ),
@@ -92,7 +118,7 @@ class AddPetScreen extends StatelessWidget {
                             labelText: "Pet Type",
                           ),
                         ),
-                        onChanged: (String? value) {
+                        onChanged: (value) {
                           if (value != null) {
                             controller.petTyp(value);
                           }
@@ -202,10 +228,21 @@ class AddPetScreen extends StatelessWidget {
                                 backgroundColor: MaterialStatePropertyAll(
                                     Colors.indigo.shade400)),
                             onPressed: () {
+                              if (controller.img == null) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        behavior: SnackBarBehavior.floating,
+                                        content: Text("Image is empty")));
+                              }
+
                               if (petKey.currentState!.validate()) {
                                 petKey.currentState!.save();
-                                controller.addPetData(
-                                    controller.imageName, controller.files);
+                                if (controller.img != null) {
+                                  controller.addPetData(
+                                      controller.imageName, controller.files);
+                                  Navigator.pushReplacementNamed(
+                                      context, "/home");
+                                }
                               }
                             },
                             child: Text(

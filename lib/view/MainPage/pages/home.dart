@@ -151,120 +151,34 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
               StreamBuilder(
-                stream: FirebaseFirestore.instance.collection("pets").snapshots(),
-                builder: (context, snapshot) {
-             if(snapshot.hasData){
-               return GridView.builder(
-                   padding: EdgeInsets.all(screenWidth / 26.13),
-                   physics: NeverScrollableScrollPhysics(),
-                   shrinkWrap: true,
-                   itemCount: snapshot.data!.docs.length,
-                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                     crossAxisCount: 2,
-                     mainAxisExtent: 226,
-                     crossAxisSpacing: screenWidth / 32.66,
-                     mainAxisSpacing: screenWidth / 32.66,
-                   ),
-                   itemBuilder: (context, index) {
-                     final data=snapshot.data!.docs[index];
-                     return GestureDetector(
-                       onTap: () {
-                         print(screenHeight);
-                       },
-                       child: Container(
-                         decoration: BoxDecoration(
-                             border: Border.all(color: Colors.indigo.shade300, width: 3),
-                             borderRadius: BorderRadius.circular(18),
-                             color: Colors.grey.shade200,
-                             boxShadow: [
-                               BoxShadow(
-                                   offset: Offset(2, 2),
-                                   spreadRadius: 2,
-                                   blurRadius: 2,
-                                   color: Colors.indigo.withOpacity(0.3))
-                             ]),
-                         child: Column(
-                           children: [
-                             Container(
-                               width: screenWidth / 3.01,
-                               height: 142,
-                               margin: EdgeInsets.only(top: 6),
-                               padding: EdgeInsets.all(3),
-                               decoration: BoxDecoration(
-                                   // color: Colors.grey.shade700,
-                                 // image: DecorationImage(
-                                 //   fit: BoxFit.fill,
-                                 //     image: NetworkImage(data["imageUrl"])),
-                                 //   borderRadius: BorderRadius.circular(18)
-                                   ),
-                               child: ClipRRect(
-                                 borderRadius: BorderRadius.circular(12.0),
-                                 child: CachedNetworkImage(
-                                   placeholder: (context, url) => MyShimmer(
-                                     height:142 ,width:screenWidth / 3.01 ,radious: 12,
-                                     color: Colors.grey,
-                                   ),
-                                   errorWidget: (context, url, error) => Icon(Icons.error),
-                                   fit: BoxFit.cover,
-                                     imageUrl:data["imageUrl"],),
-                               ),
-                             ),
-                             Padding(
-                               padding: EdgeInsets.only(left: 5, ),
-                               child: Text(
-                                 data["petName"],
-                                 style: TextStyle(
-                                     color: Colors.black,
-                                     fontWeight: FontWeight.w600,
-                                     fontSize: 16),
-                                 textAlign: TextAlign.left,
-                                 overflow: TextOverflow.ellipsis,
-                                 maxLines: 1,
-                               ),
-                             ),
-                             Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                               children: [
-                                 Expanded(
-                                   child: Padding(
-                                     padding:  EdgeInsets.only(left: screenWidth / 78.4),
-                                     child: Text(
-                                       data["breed"],
-                                       style: TextStyle(
-                                           color: Colors.black,
-                                           fontWeight: FontWeight.w500,
-                                           fontSize: 14),
-                                       textAlign: TextAlign.left,
-                                       overflow: TextOverflow.ellipsis,
-                                       maxLines: 2,
-                                     ),
-                                   ),
-                                 ),
-                                 IconButton(
-                                     style: ButtonStyle(
-                                         iconColor:
-                                         MaterialStatePropertyAll(Colors.red.shade600),
-                                         iconSize: MaterialStatePropertyAll(30)),
-                                     onPressed: () {
-                                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                                           behavior: SnackBarBehavior.floating,
-                                           content: Text("H=${screenHeight} & W=${screenWidth}")));
-                                     },
-                                     icon: Icon(Icons.favorite_border)),
-                               ],
-                             )
-                           ],
-                         ),
-                       ),
-                     );
-                   });
-             }
-             else{
-               return Container();
-             }
-                }
-              )
+                  stream:
+                      FirebaseFirestore.instance.collection("pets").snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return GridView.builder(
+                          padding: EdgeInsets.all(screenWidth / 26.13),
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.docs.length,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisExtent: 226,
+                            crossAxisSpacing: screenWidth / 32.66,
+                            mainAxisSpacing: screenWidth / 32.66,
+                          ),
+                          itemBuilder: (context, index) {
+                            final data = snapshot.data!.docs[index];
+                            return PetCard(
+                              imageUrl: data["imageUrl"],
+                              breed: data["breed"],
+                              petName: data["petName"],
+                            );
+                          });
+                    } else {
+                      return Container();
+                    }
+                  })
             ],
           ),
         ),
