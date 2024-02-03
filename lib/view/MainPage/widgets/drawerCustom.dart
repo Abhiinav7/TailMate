@@ -80,6 +80,21 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,
+            onTap: () {
+              Navigator.pushNamed(context, "/mypets");
+            },
+            title: Text(
+              "My Pets",
+              style: TextStyle(fontSize: 20),
+            ),
+            leading: Icon(
+              Icons.pets_sharp,
+              size: 25,
+            ),
+          ),
+          ListTile(
+            textColor: Colors.black,
+            iconColor: Colors.indigo,
             onTap: () {},
             title: Text(
               "Settings",

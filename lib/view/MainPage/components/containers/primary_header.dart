@@ -2,23 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:tailmate/view/MainPage/components/containers/circularContainer.dart';
 import 'package:tailmate/view/MainPage/components/curved_edges/curvedWidget.dart';
 class PrimaryHeaderContainer extends StatelessWidget {
-  const PrimaryHeaderContainer({
+   PrimaryHeaderContainer({
 
     required this.screenWidth,
-    required this.child
+    required this.child,
+    this.color=Colors.teal,
+     this.height=300
   });
 
   final double screenWidth;
   final Widget child;
+   Color color;
+   double height;
   @override
   Widget build(BuildContext context) {
     return CurvedWidget(
       child: Container(
         width: screenWidth,
-        color: Colors.indigo.shade500,
+        color: color,
         padding: EdgeInsets.all(0),
         child: SizedBox(
-          height: 300,
+          height: height,
           child: Stack(
               children: [
                 Positioned(

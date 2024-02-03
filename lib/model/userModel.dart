@@ -10,6 +10,7 @@ class UserModel {
     required this.id,
     required this.phone,
     required this.email,
+
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -17,6 +18,7 @@ class UserModel {
     id: json["id"],
     phone: json["phone"],
     email: json["email"],
+
   );
 
   Map<String, dynamic> toJson() => {
@@ -24,5 +26,6 @@ class UserModel {
     "id": id,
     "phone": phone,
     "email": email,
+
   };
 }

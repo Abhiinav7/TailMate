@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tailmate/controller/mainController.dart';
+import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/view/MainPage/pages/add_pet.dart';
 import 'package:tailmate/view/MainPage/pages/home.dart';
 import 'package:tailmate/view/MainPage/pages/profile.dart';
@@ -16,8 +16,7 @@ class MainScreen extends StatelessWidget {
    ];
   @override
   Widget build(BuildContext context) {
-
-    final controller=Provider.of<MainController>(context);
+    final controller=Provider.of<PetController>(context);
     return Scaffold(
       backgroundColor: Colors.white,
       bottomNavigationBar:GoogleNavbar(

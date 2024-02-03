@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
 import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/view/MainPage/components/shimmer_effects/customShimmer.dart';
 
 class PetCard extends StatelessWidget {
@@ -11,23 +12,28 @@ class PetCard extends StatelessWidget {
     required this.imageUrl,
     required this.breed,
     required this.petName,
+     required this.data
+
   });
    String imageUrl;
    String breed;
    String petName;
+  Map<String,dynamic> data;
   @override
   Widget build(BuildContext context) {
+
     final petController=Provider.of<PetController>(context);
+    final userController=Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
     double screenHeight = ScreenUtil.Height(context);
 
     return GestureDetector(
       onTap: () {
-        print(screenHeight);
+Navigator.pushNamed(context, "/petview",arguments: data);
       },
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.indigo.shade300, width: 3),
+            border: Border.all(color: Colors.teal.shade400, width: 3),
             borderRadius: BorderRadius.circular(18),
             color: Colors.grey.shade200,
             boxShadow: [
@@ -100,9 +106,9 @@ class PetCard extends StatelessWidget {
                         MaterialStatePropertyAll(Colors.red.shade600),
                         iconSize: MaterialStatePropertyAll(30)),
                     onPressed: () {
-                     petController.addWishlist(petName,breed,imageUrl);
+                        petController.addWishlist(petName,breed,imageUrl);
                     },
-                    icon: Icon(Icons.favorite_border)),
+                    icon: Icon(Icons.favorite_border )),
               ],
             )
           ],

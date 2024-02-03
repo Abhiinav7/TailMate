@@ -9,6 +9,20 @@ import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/model/petModel.dart';
 
 class PetController extends ChangeNotifier {
+//page controller
+  int selectedIndex = 0; //index of botton nav bar
+  void changeScreen(int value) {
+    selectedIndex = value;
+    notifyListeners();
+  }
+
+//wish list button state change
+//   bool wishlist=false;
+//   isclicked(){
+//     wishlist=!wishlist;
+//     notifyListeners();
+//   }
+
   UserController userController = UserController();
   final List<String> petTypesList = [
     "Cat",
@@ -21,33 +35,45 @@ class PetController extends ChangeNotifier {
 
   final TextEditingController petNameController = TextEditingController();
   final TextEditingController petDiscriptionController =
-      TextEditingController();
+  TextEditingController();
   final TextEditingController petWeightController = TextEditingController();
   final TextEditingController petBreedController = TextEditingController();
   final TextEditingController petAgeController = TextEditingController();
-  String _petType = " ";
-  String _petGender = " ";
+   String petType=" ";
+  String petGender = " ";
 
-  String get petGender => _petGender;
+  // String get petGender => _petGender;
 
   petTyp(String value) {
-    _petType = value;
+    petType = value;
     notifyListeners();
   }
 
   petGen(String value) {
-    _petGender = value;
+    petGender = value;
     notifyListeners();
   }
-
+// void dataClear(){
+//   petNameController.clear();
+//   petDiscriptionController.clear();
+//   petWeightController.clear();
+//   petAgeController.clear();
+//   petBreedController.clear();
+//   String petType=" ";
+//   String petGender = " ";
+// File? img;
+//   String imageName='';
+//   notifyListeners();
+// }
   CollectionReference collectionReference =
-      FirebaseFirestore.instance.collection("pets");
+  FirebaseFirestore.instance.collection("pets");
   CollectionReference userCollection =
-      FirebaseFirestore.instance.collection("user");
+  FirebaseFirestore.instance.collection("user");
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
   File? img;
-  String imageName = " ";
+   String imageName='';
+
   late XFile files;
 
 // UserModel? userModel;
@@ -62,12 +88,15 @@ class PetController extends ChangeNotifier {
     final imgTemp = File(file.path);
     this.img = imgTemp;
     notifyListeners();
-    String imgName = DateTime.now().millisecondsSinceEpoch.toString();
+    String imgName = DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString();
     imageName = imgName;
     notifyListeners();
     // Map<String,dynamic> data=userController.fetchData() as Map<String, dynamic>;
     // userModel=data as UserModel?;
-    notifyListeners();
+    // notifyListeners();
     // final imgUrl=addPetData(imgName, file);
     return file;
   }
@@ -82,30 +111,39 @@ class PetController extends ChangeNotifier {
     final imgTemp = File(file.path);
     this.img = imgTemp;
     notifyListeners();
-    String imgName = DateTime.now().millisecondsSinceEpoch.toString();
+    String imgName = DateTime
+        .now()
+        .millisecondsSinceEpoch
+        .toString();
     imageName = imgName;
     notifyListeners();
     // Map<String,dynamic> data=userController.fetchData() as Map<String, dynamic>;
     // userModel=data as UserModel?;
-    notifyListeners();
+    // notifyListeners();
     // final imgUrl=addPetData(imgName, file);
     return file;
   }
+
+  var imgUrl = " ";
 
   //function to add pet image to firebase storage and call the function to add pet details to cloud store
   Future addPetData(final imageName, XFile image) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
-        referenceRoot.child("Pet Images").child(userId);
+    referenceRoot.child("Pet Images").child(userId);
 
     Reference referenceImageToUpload =
-        referenceDirImages.child(imageName + ".png");
+    referenceDirImages.child(imageName + ".png");
     try {
       await referenceImageToUpload.putFile(File(image.path));
       var imageUrl = await referenceImageToUpload.getDownloadURL();
+      imgUrl = imageUrl;
+      notifyListeners();
       print(imageUrl);
+      var tim = DateTime.now();
       final petData = PetModel(
-        petType: _petType,
+        time: tim.toString(),
+        petType: petType,
         petName: petNameController.text,
         breed: petBreedController.text,
         gender: petGender,
@@ -113,23 +151,25 @@ class PetController extends ChangeNotifier {
         weight: double.parse(petWeightController.text),
         discription: petDiscriptionController.text,
         imageUrl: imageUrl,
-        petId: collectionReference.doc().id,
+        petId: collectionReference
+            .doc()
+            .id,
         userId: userId,
       );
-      addPetDetails(petData);
+      addPetDetails(petData, tim.toString());
     } on FirebaseException catch (error) {
       print(error.code);
     } on PlatformException catch (e) {
       print(e.code);
     } catch (e) {
-      print("error occured ${e}");
+      print("error occured : ${e}");
     }
   }
 
   //function to add pet details to firebase cloud store
-  Future addPetDetails(PetModel petModel) async {
+  Future addPetDetails(PetModel petModel, var time) async {
     try {
-      collectionReference.add(petModel.toJson());
+      collectionReference.doc(time).set(petModel.toJson());
     } catch (e) {
       print("/////////////error$e");
     }
@@ -137,13 +177,68 @@ class PetController extends ChangeNotifier {
 
   Future addWishlist(String petName, String breed, String imageUrl) async {
     try {
-      userCollection.doc(userId).collection("wishlist").doc().set({
+      var time = DateTime.now();
+      userCollection
+          .doc(userId)
+          .collection("wishlist")
+          .doc(time.toString())
+          .set({
         "petName": petName,
         "petBreed": breed,
         "petImage": imageUrl,
+        "time": time.toString()
       });
     } catch (e) {
       print("///////////////error${e}");
+    }
+  }
+
+  Future deleteWishlist(time) async {
+    try {
+      userCollection
+          .doc(userId)
+          .collection("wishlist")
+          .doc(time).delete();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  Future petDetailsUpdate(final imageName, XFile image, var tim) async {
+    Reference referenceRoot = FirebaseStorage.instance.ref();
+    Reference referenceDirImages =
+    referenceRoot.child("Pet Images").child(userId);
+
+    Reference referenceImageToUpload =
+    referenceDirImages.child(imageName + ".png");
+    try {
+      await referenceImageToUpload.putFile(File(image.path));
+      var imageUrl = await referenceImageToUpload.getDownloadURL();
+      imgUrl = imageUrl;
+      notifyListeners();
+      print(imageUrl);
+      final petData = PetModel(
+        time: tim.toString(),
+        petType: petType,
+        petName: petNameController.text,
+        breed: petBreedController.text,
+        gender: petGender,
+        age: int.parse(petAgeController.text),
+        weight: double.parse(petWeightController.text),
+        discription: petDiscriptionController.text,
+        imageUrl: imageUrl,
+        petId: collectionReference
+            .doc()
+            .id,
+        userId: userId,
+      );
+      collectionReference.doc(tim).update(petData.toJson());
+    } on FirebaseException catch (error) {
+      print(error.code);
+    } on PlatformException catch (e) {
+      print(e.code);
+    } catch (e) {
+      print("error occured : ${e}");
     }
   }
 }

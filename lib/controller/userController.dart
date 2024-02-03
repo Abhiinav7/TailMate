@@ -18,8 +18,9 @@ class UserController extends ChangeNotifier {
     }
   }
 
-  String name ="";
-  String email = "";
+  String name =" ";
+  String email =" ";
+
   Future fetchData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
     final docSnapshot = await collectionReference.doc(userId).get();
@@ -35,5 +36,6 @@ class UserController extends ChangeNotifier {
 return data;
     }
   }
+
 
 }

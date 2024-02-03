@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,10 +9,8 @@ import 'package:tailmate/Utils/constants/screen_utils.dart';
 import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/location.dart';
-import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';
 import 'package:tailmate/view/MainPage/components/pet_card/petcard.dart';
-import 'package:tailmate/view/MainPage/components/shimmer_effects/customShimmer.dart';
 import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
 import 'package:tailmate/view/MainPage/widgets/drawerCustom.dart';
 import 'package:tailmate/view/MainPage/widgets/vertical-categoryList.dart';
@@ -30,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<LocationController>(context, listen: false)
         .getCurrentPosition();
     Provider.of<UserController>(context, listen: false).fetchData();
+    // Provider.of<PetController>(context, listen: false).dataClear();
     super.initState();
   }
 
@@ -170,9 +169,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           itemBuilder: (context, index) {
                             final data = snapshot.data!.docs[index];
                             return PetCard(
+                              data: data.data(),
                               imageUrl: data["imageUrl"],
                               breed: data["breed"],
                               petName: data["petName"],
+
                             );
                           });
                     } else {

@@ -36,18 +36,23 @@ class WishlistPets extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final data = snapshot.data!.docs[index];
-                return ListTile(
-                  title: Text(data["petName"]),
-                  subtitle:Text( data["petBreed"]),
-                  leading: Container(
-                    height: 55,
-                    width: 55,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: CachedNetworkImage(
-                        fit: BoxFit.cover,
-                          imageUrl: data["petImage"]),
+                return Card(
+                  child: ListTile(
+                    title: Text(data["petName"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
+                    subtitle:Text( data["petBreed"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
+                    leading: Container(
+                      height: 56,
+                      width: 56,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(56),
+                        child: CachedNetworkImage(
+                          fit: BoxFit.cover,
+                            imageUrl: data["petImage"]),
+                      ),
                     ),
+                    trailing: IconButton(onPressed: (){
+                      controller.deleteWishlist(data["time"]);
+                    }, icon: Icon(Icons.delete)),
                   ),
                 );
               },);

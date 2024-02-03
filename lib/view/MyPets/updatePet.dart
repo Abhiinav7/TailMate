@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,19 +7,31 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/services/validation_services.dart';
-import 'package:tailmate/view/MainPage/mainScreen.dart';
-import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
 import 'package:tailmate/view/MainPage/widgets/customButton.dart';
 import 'package:tailmate/widgets/CustomTextfield.dart';
 
-class AddPetScreen extends StatelessWidget {
-  AddPetScreen({super.key});
+class UpdatePet extends StatelessWidget {
+  UpdatePet({super.key});
 
   @override
   Widget build(BuildContext context) {
     final petKey = GlobalKey<FormState>();
+    final petControllers=Provider.of<PetController>(context);
+    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+   petControllers.imgUrl=arg["imageUrl"];
+   // petControllers.petType=arg["petType"];
+   petControllers.petAgeController.text=arg["age"].toString();
+ petControllers.petNameController.text=arg["petName"];
+   petControllers.petBreedController.text=arg["breed"];
+  // petControllers.petGender=arg["gender"];
+  petControllers.petWeightController.text=arg["weight"].toString();
+petControllers.petDiscriptionController.text=arg["discription"];
+var time=arg["time"];
+
+
     return Scaffold(
-      appBar: MyAppbar(),
+      appBar: AppBar(
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -27,7 +40,7 @@ class AddPetScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    "Sell My Pet.",
+                    "Update Pet Details.",
                     style: GoogleFonts.aDLaMDisplay(
                         fontSize: 20,
                         fontWeight: FontWeight.w900,
@@ -43,28 +56,26 @@ class AddPetScreen extends StatelessWidget {
                 child: Consumer<PetController>(
                   builder: (context, controller, child) => Column(
                     children: [
-                      controller.img == null
+                      controller.img==null
                           ? Container(
-                              height: 100,
-                              width: 100,
-                              decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.indigo, width: 2),
-                                borderRadius: BorderRadius.circular(100),
-                                image: DecorationImage(
-                                    fit: BoxFit.cover,
-                                    image: AssetImage("assets/logo/logo1.png")),
-                              ),
-                            )
+                        height: 100,
+                        width: 100,
+                        child: ClipRRect(
+                      borderRadius: BorderRadius.circular(56),
+                  child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: petControllers.imgUrl),
+                ),
+                      )
                           : Container(
-                              height: 130,
-                              width: 130,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(130),
-                                  image: DecorationImage(
-                                      fit: BoxFit.fill,
-                                      image: FileImage(controller.img!))),
-                            ),
+                        height: 130,
+                        width: 130,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(130),
+                            image: DecorationImage(
+                                fit: BoxFit.fill,
+                                image: FileImage(controller.img!))),
+                      ),
                       SizedBox(
                         height: 15,
                       ),
@@ -87,11 +98,11 @@ class AddPetScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                       children: [
                                         MyButton(
-                                          height: 35,
-                                          width:200,
+                                            height: 35,
+                                            width:200,
                                             onTap: (){
-                                            controller.imagePickCamera();
-                                            Navigator.pop(context);
+                                              controller.imagePickCamera();
+                                              Navigator.pop(context);
                                             }, text: "Camera"),
                                         MyButton(
                                             height: 35,
@@ -99,7 +110,7 @@ class AddPetScreen extends StatelessWidget {
                                             onTap: (){
                                               controller.imagePickGallery();
                                               Navigator.pop(context);
-                                              }, text: "Gallery"),
+                                            }, text: "Gallery"),
                                       ],
                                     )),
                               );
@@ -209,7 +220,7 @@ class AddPetScreen extends StatelessWidget {
                         validator: (value) => Validation.validateFields(value!),
                         controller: controller.petAgeController,
                         keyboardType:
-                            TextInputType.numberWithOptions(decimal: true),
+                        TextInputType.numberWithOptions(decimal: true),
                         hintText: 'Enter pet age',
                       ),
                       SizedBox(
@@ -235,34 +246,35 @@ class AddPetScreen extends StatelessWidget {
                                 backgroundColor: MaterialStatePropertyAll(
                                     Colors.indigo.shade400)),
                             onPressed: () {
-                              if (controller.img == null) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        behavior: SnackBarBehavior.floating,
-                                        content: Text("Image is empty")));
-                              }
+                              // if (controller.img == null) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(
+                              //       SnackBar(
+                              //           behavior: SnackBarBehavior.floating,
+                              //           content: Text("Image is empty")));
+                              // }
 
                               if (petKey.currentState!.validate()) {
                                 petKey.currentState!.save();
-                                if (controller.img != null) {
-                                  controller.addPetData(
-                                      controller.imageName, controller.files);
-                                  Fluttertoast.showToast(msg: "Pet added succesfully");
+                                // if (controller.img != null) {
+                                  controller.petDetailsUpdate(
+                                      controller.imageName, controller.files,time);
+                                  Fluttertoast.showToast(msg: "Pet details updated");
                                   // controller.selectedIndex=0;
-                              //     controller.img=null;
-                              //     controller.petNameController.clear();
-                              //     controller.petBreedController.clear();
-                              //     controller.petDiscriptionController.clear();
-                              //     controller.petAgeController.clear();
-                              //     controller.petWeightController.clear();
-                              // controller.petGen(" ");
-                                  controller.changeScreen(0);
-                                  Navigator.pushNamed(context, "/main");
-                                }
+                                  //     controller.img=null;
+                                  //     controller.petNameController.clear();
+                                  //     controller.petBreedController.clear();
+                                  //     controller.petDiscriptionController.clear();
+                                  //     controller.petAgeController.clear();
+                                  //     controller.petWeightController.clear();
+                                  // controller.petGen(" ");
+
+                                // }
+                                controller.changeScreen(0);
+                             Navigator.pushNamed(context, "/main");
                               }
                             },
                             child: Text(
-                              "Sell Pet",
+                              "Update Pet",
                               style: TextStyle(color: Colors.white),
                             )),
                       )

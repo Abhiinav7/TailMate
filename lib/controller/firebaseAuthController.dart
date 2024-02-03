@@ -67,6 +67,7 @@ class FirebaseAuthController extends ChangeNotifier {
       String userId = authRef.user!.uid;
       if (userId.isNotEmpty) {
         final userDetails = UserModel(
+
             name: nameController.text.trim(),
             id: userId,
             phone: phoneController.text.trim(),
@@ -143,7 +144,8 @@ class FirebaseAuthController extends ChangeNotifier {
               name: user.displayName.toString(),
               id: user.uid,
               phone: user.phoneNumber.toString(),
-              email: user.email.toString());
+              email: user.email.toString(),
+            );
           firebaseCloudController.userDetailsAdd(user.uid, userModel);
           navigator.pushReplacementNamed('/main');
           Fluttertoast.showToast(msg: "GOOGLE SIGN IN SUCCESSFUL");

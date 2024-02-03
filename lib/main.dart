@@ -10,7 +10,12 @@ import 'package:tailmate/firebase_options.dart';
 
 import 'package:tailmate/view/Login_page/login_page.dart';
 import 'package:tailmate/view/MainPage/mainScreen.dart';
+import 'package:tailmate/view/MainPage/pages/add_pet.dart';
 import 'package:tailmate/view/MainPage/pages/home.dart';
+import 'package:tailmate/view/MainPage/pages/wishlist.dart';
+import 'package:tailmate/view/MyPets/mypets.dart';
+import 'package:tailmate/view/MyPets/petCardView.dart';
+import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
 
@@ -50,6 +55,11 @@ class MyApp extends StatelessWidget {
         "/create":(context) =>SignupScreen(),
         "/main":(context) =>MainScreen(),
         "/home":(context) =>HomeScreen(),
+        "/wishlist":(context) =>WishlistPets(),
+        "/addpet":(context) => AddPetScreen(),
+        "/mypets":(context) => MyPets(),
+        "/updatepet":(context) => UpdatePet(),
+        "/petview":(context) => PetCardView(),
 
       },
       initialRoute:'/onBoard',

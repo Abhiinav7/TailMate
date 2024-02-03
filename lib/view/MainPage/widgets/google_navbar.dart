@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:tailmate/controller/mainController.dart';
+import 'package:tailmate/controller/petController.dart';
 
 class GoogleNavbar extends StatelessWidget {
   void Function(int)? onTabChange;
@@ -11,7 +11,7 @@ class GoogleNavbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Provider.of<MainController>(context);
+    final controller = Provider.of<PetController>(context);
     return GNav(
 
       backgroundColor: Colors.white,
