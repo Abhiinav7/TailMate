@@ -38,16 +38,6 @@ class HeaderPart extends StatelessWidget {
               icon: Icon(Icons.arrow_back),
             ),
             backgroundColor: Colors.transparent,
-            actions: [
-              IconButton(
-                  style: ButtonStyle(
-                      iconSize: MaterialStatePropertyAll(28),
-                      iconColor: MaterialStatePropertyAll(Colors.white)),
-                  onPressed: () {
-                    petController.addWishlist(data["petName"], data["breed"], data["imageUrl"]);
-                  },
-                  icon: Icon(Icons.favorite_border))
-            ],
           ),
 
 

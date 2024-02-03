@@ -15,13 +15,14 @@ class MyDrawer extends StatelessWidget {
     return Drawer(
 
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      backgroundColor: Colors.indigo.shade50,
+      backgroundColor: Colors.teal.shade50,
       width: screenWidth - 70,
-      surfaceTintColor: Colors.indigo,
+      surfaceTintColor: Colors.teal,
       // shadowColor: Colors.red,
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
+      decoration: BoxDecoration(color: Colors.teal.shade500),
             currentAccountPicture: CircleAvatar(
               radius: 30,
               backgroundImage: AssetImage(

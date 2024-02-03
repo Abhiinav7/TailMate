@@ -35,9 +35,14 @@ class WishlistPets extends StatelessWidget {
             return ListView.builder(
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
-                final data = snapshot.data!.docs[index];
+                final data = snapshot.data!.docs[index] ;
+
+
                 return Card(
                   child: ListTile(
+                    onTap: (){
+                      Navigator.pushNamed(context, "/petview",arguments: data.data());
+                    },
                     title: Text(data["petName"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
                     subtitle:Text( data["petBreed"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
                     leading: Container(
