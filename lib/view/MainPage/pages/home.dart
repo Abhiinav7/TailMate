@@ -156,13 +156,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     if (snapshot.hasData) {
                       return GridView.builder(
                           padding: EdgeInsets.all(screenWidth / 26.13),
-                          physics: NeverScrollableScrollPhysics(),
+                          physics: BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: snapshot.data!.docs.length,
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisExtent: 226,
+                            mainAxisExtent: 222,
                             crossAxisSpacing: screenWidth / 32.66,
                             mainAxisSpacing: screenWidth / 32.66,
                           ),

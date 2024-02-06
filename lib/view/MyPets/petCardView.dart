@@ -11,7 +11,7 @@ class PetCardView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final data = ModalRoute.of(context)!.settings.arguments as Map;
+    final data = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
 
     final petController = Provider.of<PetController>(context);
     double screenWidth = ScreenUtil.Width(context);
@@ -28,7 +28,7 @@ class PetCardView extends StatelessWidget {
               Text(
                 data["petName"],
                 style: GoogleFonts.gabriela(
-                  fontSize: 28,
+                  fontSize: 25,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -37,8 +37,7 @@ class PetCardView extends StatelessWidget {
                       iconSize: MaterialStatePropertyAll(30),
                       iconColor: MaterialStatePropertyAll(Colors.red)),
                   onPressed: () {
-                    petController.addWishlist(
-                        data["petName"], data["breed"], data["imageUrl"]);
+                    petController.addWishlist(data);
                   },
                   icon: Icon(Icons.favorite_border))
             ],

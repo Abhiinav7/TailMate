@@ -45,11 +45,11 @@ class GoogleNavbar extends StatelessWidget {
         ),
         GButton(
           icon: Icons.favorite_rounded,
-          text: 'Fav',
+          text: 'Pawlist',
         ),
         GButton(
           icon: Icons.person,
-          text: 'Profile',
+          text: 'Chat',
         )
       ],
       onTabChange: onTabChange,

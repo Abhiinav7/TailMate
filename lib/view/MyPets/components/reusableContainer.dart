@@ -13,7 +13,7 @@ String value;
       height: 60,
       width: 110,
       decoration: BoxDecoration(
-          color: Colors.purple.shade400,
+          color: Colors.teal.shade500,
           borderRadius: BorderRadius.circular(12)),
       child: Stack(
         alignment: Alignment.center,
@@ -35,7 +35,7 @@ String value;
                     "assets/images/paw.png",
                     height: 20,
                     width: 30,
-                    color: Colors.purple.shade200,
+                    color: Colors.teal.shade200,
                   ))),
           Positioned(
               top: 2,
@@ -46,7 +46,7 @@ String value;
                     "assets/images/paw.png",
                     height: 20,
                     width: 30,
-                    color: Colors.purple.shade200,
+                    color: Colors.teal.shade200,
                   )))
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/view/MainPage/pages/add_pet.dart';
 import 'package:tailmate/view/MainPage/pages/home.dart';
-import 'package:tailmate/view/MainPage/pages/profile.dart';
+import 'package:tailmate/view/MainPage/pages/chat.dart';
 import 'package:tailmate/view/MainPage/pages/wishlist.dart';
 import 'package:tailmate/view/MainPage/widgets/google_navbar.dart';
 class MainScreen extends StatelessWidget {
@@ -12,7 +12,7 @@ class MainScreen extends StatelessWidget {
      HomeScreen(),
      AddPetScreen(),
      WishlistPets(),
-     MyProfile()
+     MyChat.MyChat()
    ];
   @override
   Widget build(BuildContext context) {

@@ -36,15 +36,13 @@ class WishlistPets extends StatelessWidget {
               itemCount: snapshot.data!.docs.length,
               itemBuilder: (context, index) {
                 final data = snapshot.data!.docs[index] ;
-
-
                 return Card(
                   child: ListTile(
                     onTap: (){
                       Navigator.pushNamed(context, "/petview",arguments: data.data());
                     },
                     title: Text(data["petName"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
-                    subtitle:Text( data["petBreed"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
+                    subtitle:Text( data["breed"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
                     leading: Container(
                       height: 56,
                       width: 56,
@@ -52,7 +50,7 @@ class WishlistPets extends StatelessWidget {
                         borderRadius: BorderRadius.circular(56),
                         child: CachedNetworkImage(
                           fit: BoxFit.cover,
-                            imageUrl: data["petImage"]),
+                            imageUrl: data["imageUrl"]),
                       ),
                     ),
                     trailing: IconButton(onPressed: (){

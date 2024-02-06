@@ -100,15 +100,27 @@ Navigator.pushNamed(context, "/petview",arguments: data);
                     ),
                   ),
                 ),
-                IconButton(
-                    style: ButtonStyle(
-                        iconColor:
-                        MaterialStatePropertyAll(Colors.red.shade600),
-                        iconSize: MaterialStatePropertyAll(30)),
-                    onPressed: () {
-                        petController.addWishlist(petName,breed,imageUrl);
-                    },
-                    icon: Icon(Icons.favorite_border )),
+                Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      bottomRight:Radius.circular(13)
+                    )
+                  ),
+                  child: IconButton(
+                      style: ButtonStyle(
+                          iconColor:
+                          MaterialStatePropertyAll(Colors.white),
+                          iconSize: MaterialStatePropertyAll(30)),
+                      onPressed: () {
+                          petController.addWishlist(data);
+
+                      },
+                      icon: Icon(Icons.favorite_border )),
+                ),
               ],
             )
           ],

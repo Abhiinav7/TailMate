@@ -28,8 +28,7 @@ class PetController extends ChangeNotifier {
     "Cat",
     "Dog",
     "Rabbit",
-    "birds",
-    "fish",
+    "bird",
     "other"
   ];
 
@@ -175,7 +174,7 @@ class PetController extends ChangeNotifier {
     }
   }
 
-  Future addWishlist(String petName, String breed, String imageUrl) async {
+  Future addWishlist(Map<String,dynamic> data) async {
     try {
       var time = DateTime.now();
       userCollection
@@ -183,9 +182,14 @@ class PetController extends ChangeNotifier {
           .collection("wishlist")
           .doc(time.toString())
           .set({
-        "petName": petName,
-        "petBreed": breed,
-        "petImage": imageUrl,
+        "discription":data["discription"],
+        "gender":data["gender"],
+        "petType":data["petType"],
+        "weight":data["weight"],
+        "age":data["age"],
+        "petName": data["petName"],
+        "breed": data["breed"],
+        "imageUrl": data["imageUrl"],
         "time": time.toString()
       });
     } catch (e) {
@@ -233,6 +237,7 @@ class PetController extends ChangeNotifier {
         userId: userId,
       );
       collectionReference.doc(tim).update(petData.toJson());
+
     } on FirebaseException catch (error) {
       print(error.code);
     } on PlatformException catch (e) {
@@ -240,5 +245,21 @@ class PetController extends ChangeNotifier {
     } catch (e) {
       print("error occured : ${e}");
     }
+  }
+
+  Future myPetDelete(time)async{
+    try{
+      collectionReference.doc(time).delete();
+
+    }
+    on FirebaseException catch (error) {
+      print(error.code);
+    } on PlatformException catch (e) {
+      print(e.code);
+    } catch (e) {
+      print("error occured : ${e}");
+    }
+
+
   }
 }

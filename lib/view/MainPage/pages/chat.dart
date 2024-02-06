@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 
-class MyProfile extends StatelessWidget {
-  const MyProfile({super.key});
+class MyChat extends StatelessWidget {
+  const MyChat.MyChat({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text("MyProfile"),
+      child: Text("chat"),
     );
   }
 }

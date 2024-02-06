@@ -17,7 +17,7 @@ class UpdatePet extends StatelessWidget {
   Widget build(BuildContext context) {
     final petKey = GlobalKey<FormState>();
     final petControllers=Provider.of<PetController>(context);
-    final arg = ModalRoute.of(context)!.settings.arguments as Map;
+    final arg = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
    petControllers.imgUrl=arg["imageUrl"];
    // petControllers.petType=arg["petType"];
    petControllers.petAgeController.text=arg["age"].toString();
