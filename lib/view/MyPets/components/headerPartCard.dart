@@ -26,7 +26,7 @@ class HeaderPart extends StatelessWidget {
               width: screenWidth,
               height: 350,
               child: CachedNetworkImage(
-                  fit: BoxFit.fill, imageUrl: data["imageUrl"])),
+                  fit: BoxFit.cover, imageUrl: data["imageUrl"])),
           MyAppbar(
             leading: IconButton(
               style: ButtonStyle(

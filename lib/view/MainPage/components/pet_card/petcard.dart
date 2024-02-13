@@ -25,7 +25,7 @@ class PetCard extends StatelessWidget {
     final petController=Provider.of<PetController>(context);
     final userController=Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
-    double screenHeight = ScreenUtil.Height(context);
+
 
     return GestureDetector(
       onTap: () {

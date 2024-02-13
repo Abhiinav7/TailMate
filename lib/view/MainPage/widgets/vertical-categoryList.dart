@@ -28,8 +28,8 @@ class VerticalCategory extends StatelessWidget {
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 12,vertical: 6),
-                        height: 75,
-                        width: 75,
+                        height: 70,
+                        width: 70,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(35),
                           image: DecorationImage(

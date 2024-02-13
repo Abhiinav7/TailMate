@@ -4,9 +4,11 @@ class CurveContainer extends StatelessWidget {
    CurveContainer({super.key,
    required this.heading,
    required this.value,
+   required this.unit,
    });
 String heading;
 String value;
+String unit;
   @override
   Widget build(BuildContext context) {
     return    Container(
@@ -22,7 +24,7 @@ String value;
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(heading,style: GoogleFonts.rem(color: Colors.white,fontSize: 17,fontWeight: FontWeight.w700),),
-              Text(value,style: GoogleFonts.readexPro(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w500)),
+              Text(value+unit,style: GoogleFonts.readexPro(color: Colors.white,fontSize: 15,fontWeight: FontWeight.w500)),
 
             ],
           ),

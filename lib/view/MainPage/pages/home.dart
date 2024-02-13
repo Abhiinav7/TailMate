@@ -151,9 +151,10 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               StreamBuilder(
                   stream:
-                      FirebaseFirestore.instance.collection("pets").snapshots(),
+                      FirebaseFirestore.instance.collection("pets").where(
+                  "petType", isEqualTo: "Cat").snapshots(),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
+                    if (snapshot.hasData){
                       return GridView.builder(
                           padding: EdgeInsets.all(screenWidth / 26.13),
                           physics: BouncingScrollPhysics(),
