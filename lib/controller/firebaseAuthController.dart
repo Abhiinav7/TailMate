@@ -67,7 +67,6 @@ class FirebaseAuthController extends ChangeNotifier {
       String userId = authRef.user!.uid;
       if (userId.isNotEmpty) {
         final userDetails = UserModel(
-
             name: nameController.text.trim(),
             id: userId,
             phone: phoneController.text.trim(),
@@ -91,6 +90,27 @@ class FirebaseAuthController extends ChangeNotifier {
     notifyListeners();
   }
 
+  bool isEmailVerified=false;
+Future emailVerification()async{
+    try{
+     await auth.currentUser?.sendEmailVerification();
+     isEmailVerified=true;
+     notifyListeners();
+    }
+        catch(e){
+      print("///////////error${e}/");
+        }
+}
+  Future forgotPass()async{
+    try{
+      await auth.sendPasswordResetEmail(email: "abhinavcetl@gmail.com");
+      isEmailVerified=true;
+      notifyListeners();
+    }
+    catch(e){
+      print("///////////error${e}/");
+    }
+  }
   loginUser(BuildContext context) async {
     final navigator = Navigator.of(context);
     try {
@@ -98,9 +118,16 @@ class FirebaseAuthController extends ChangeNotifier {
           email: logEmailController.text, password: logPassController.text);
       User? user = authRef.user;
 
-      if (user!.uid.isNotEmpty) {
-        navigator.pushReplacementNamed('/main');
-        Fluttertoast.showToast(msg: "LOGIN SUCCESSFUL");
+      if (user != null) {
+    var admin="kPC1kXowTjSwoUoOaXWZOyntGtg2";
+    if(user.uid == admin){
+      navigator.pushReplacementNamed('/admin');
+      Fluttertoast.showToast(msg: "LOGINED TO ADMIN PANNEL ");
+    }
+     else{
+      navigator.pushReplacementNamed('/main');
+      Fluttertoast.showToast(msg: "LOGIN SUCCESSFUL");
+    }
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == "invalid-email") {

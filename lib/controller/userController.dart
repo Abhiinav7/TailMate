@@ -20,6 +20,7 @@ class UserController extends ChangeNotifier {
 
   String name =" ";
   String email =" ";
+ Map<String,dynamic>userDetails={};
 
   Future fetchData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -32,6 +33,8 @@ class UserController extends ChangeNotifier {
       name = data.name;
       notifyListeners();
       email = data.email;
+      notifyListeners();
+      userDetails=docSnapshot.data() as Map<String, dynamic>;
       notifyListeners();
 return data;
     }

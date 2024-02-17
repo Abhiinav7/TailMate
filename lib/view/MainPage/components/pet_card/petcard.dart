@@ -59,6 +59,7 @@ Navigator.pushNamed(context, "/petview",arguments: data);
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12.0),
+                // child: Image.network(imageUrl,fit: BoxFit.fill,),
                 child: CachedNetworkImage(
                   placeholder: (context, url) => MyShimmer(
                     height:142 ,width:screenWidth / 3.01 ,radious: 12,

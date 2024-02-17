@@ -80,9 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         builder: (context) => IconButton(
                           icon: Image.asset(
                             "assets/icons/sort.png",
-                            height: screenWidth / 13.06,
+                            height: 32,
                             width: screenWidth / 13.06,
                             color: Colors.white,
+                            fit: BoxFit.cover,
                           ),
                           onPressed: () => Scaffold.of(context).openDrawer(),
                         ),
@@ -120,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.acme(
                                 shadows: [
                                   BoxShadow(
-                                      color: Colors.indigo,
+                                      color: Colors.teal,
                                       offset: Offset(4, 4))
                                 ],
                                 fontSize: screenWidth / 14,
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               StreamBuilder(
                   stream:
-                      FirebaseFirestore.instance.collection("pets").where(
+                  FirebaseFirestore.instance.collection("pets").where(
                   "petType", isEqualTo: "Cat").snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData){

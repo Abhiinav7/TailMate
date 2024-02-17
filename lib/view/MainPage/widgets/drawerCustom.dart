@@ -42,7 +42,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, "/profile");
+            },
             title: Text(
               "Profile",
               style: TextStyle(fontSize: 20),

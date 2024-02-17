@@ -146,7 +146,9 @@ class LoginScreen extends StatelessWidget {
                              Row(
                                children: [
                                  TextButton(
-                                     onPressed: () {},
+                                     onPressed: () {
+                                       AuthController.forgotPass();
+                                     },
                                      child: Text("Forgot password"))
                                ],
                              )

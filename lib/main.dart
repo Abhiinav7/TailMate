@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tailmate/admin/admin_mainpage.dart';
+import 'package:tailmate/controller/adminController.dart';
 import 'package:tailmate/controller/firebaseAuthController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/petController.dart';
@@ -17,6 +19,7 @@ import 'package:tailmate/view/MyPets/mypets.dart';
 import 'package:tailmate/view/MyPets/petCardView.dart';
 import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
+import 'package:tailmate/view/profile_page/profile.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
 
 void main() async {
@@ -31,6 +34,7 @@ ChangeNotifierProvider(create:  (context) => MainController(),),
 ChangeNotifierProvider(create:  (context) => LocationController(),),
 ChangeNotifierProvider(create:  (context) => UserController(),),
 ChangeNotifierProvider(create:  (context) => PetController(),),
+ChangeNotifierProvider(create:  (context) => AdminController(),),
       ],
   child: const MyApp()));
 }
@@ -60,6 +64,8 @@ class MyApp extends StatelessWidget {
         "/mypets":(context) => MyPets(),
         "/updatepet":(context) => UpdatePet(),
         "/petview":(context) => PetCardView(),
+        "/profile":(context) => MyProfile(),
+        "/admin":(context) => AdminMain(),
 
       },
       initialRoute:'/onBoard',
