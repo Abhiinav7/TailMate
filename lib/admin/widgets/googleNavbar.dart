@@ -40,11 +40,11 @@ class GoogleNav extends StatelessWidget {
           text: 'User',
         ),
         GButton(
-          icon: Icons.add_circle,
+          icon: Icons.pets_sharp,
           text: 'Pets',
         ),
         GButton(
-          icon: Icons.favorite_rounded,
+          icon: Icons.event_note_rounded,
           text: 'Events',
         ),
 

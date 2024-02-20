@@ -5,26 +5,16 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
 
-class UserPets extends StatelessWidget {
-  const UserPets({super.key});
+class AllPets extends StatelessWidget {
+  const AllPets({super.key});
 
   @override
   Widget build(BuildContext context) {
     final petController=Provider.of<PetController>(context);
-    final arg = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
-    final idUser=arg["idUser"];
+
 
     return  Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          style: ButtonStyle(
-              iconSize: MaterialStatePropertyAll(29),
-              iconColor: MaterialStatePropertyAll(Colors.teal)),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: Icon(Icons.arrow_back),
-        ),
         backgroundColor: Colors.transparent,
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
@@ -38,7 +28,7 @@ class UserPets extends StatelessWidget {
         ),
       ),
       body: StreamBuilder(
-        stream: FirebaseFirestore.instance.collection("pets").where("userId",isEqualTo:idUser).snapshots(),
+        stream: FirebaseFirestore.instance.collection("pets").snapshots(),
         builder:(context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(

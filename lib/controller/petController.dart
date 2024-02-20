@@ -52,18 +52,19 @@ class PetController extends ChangeNotifier {
     petGender = value;
     notifyListeners();
   }
-// void dataClear(){
-//   petNameController.clear();
-//   petDiscriptionController.clear();
-//   petWeightController.clear();
-//   petAgeController.clear();
-//   petBreedController.clear();
-//   String petType=" ";
-//   String petGender = " ";
-// File? img;
-//   String imageName='';
-//   notifyListeners();
-// }
+void dataClear(){
+  petNameController.clear();
+  petDiscriptionController.clear();
+  petWeightController.clear();
+  petAgeController.clear();
+  petBreedController.clear();
+   petType=" ";
+   petGender = " ";
+ img = null;
+   imageName='';
+  imgUrl=" ";
+  notifyListeners();
+}
   CollectionReference collectionReference =
   FirebaseFirestore.instance.collection("pets");
   CollectionReference userCollection =
@@ -168,7 +169,7 @@ class PetController extends ChangeNotifier {
   //function to add pet details to firebase cloud store
   Future addPetDetails(PetModel petModel, var time) async {
     try {
-      collectionReference.doc(time).set(petModel.toJson());
+     await collectionReference.doc(time).set(petModel.toJson()).then((value) => dataClear());
     } catch (e) {
       print("/////////////error$e");
     }

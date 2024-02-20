@@ -2,6 +2,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/admin/admin_mainpage.dart';
+import 'package:tailmate/admin/view/eventAdd.dart';
+import 'package:tailmate/admin/view/event_view.dart';
+import 'package:tailmate/admin/view/petListview.dart';
 import 'package:tailmate/controller/adminController.dart';
 import 'package:tailmate/controller/firebaseAuthController.dart';
 import 'package:tailmate/controller/userController.dart';
@@ -66,6 +69,9 @@ class MyApp extends StatelessWidget {
         "/petview":(context) => PetCardView(),
         "/profile":(context) => MyProfile(),
         "/admin":(context) => AdminMain(),
+        "/userpets":(context) => UserPets(),
+        "/addevent":(context) => EventsAdd(),
+        "/events":(context) => ViewEvents(),
 
       },
       initialRoute:'/onBoard',

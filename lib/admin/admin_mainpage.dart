@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/admin/view/eventAdd.dart';
-import 'package:tailmate/admin/view/petListview.dart';
+import 'package:tailmate/admin/view/event_view.dart';
+import 'package:tailmate/admin/view/petList.dart';
 import 'package:tailmate/admin/view/userlistview.dart';
 import 'package:tailmate/admin/widgets/googleNavbar.dart';
 import 'package:tailmate/controller/adminController.dart';
@@ -13,8 +14,8 @@ class AdminMain extends StatelessWidget {
   Widget build(BuildContext context) {
     final List pages=[
       UserList(),
-      PetList(),
-      EventsAdd()
+      AllPets(),
+      ViewEvents()
     ];
     final controller=Provider.of<AdminController>(context);
     return Scaffold(
