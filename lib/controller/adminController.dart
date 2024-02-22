@@ -52,7 +52,7 @@ class AdminController extends ChangeNotifier {
 
   var imgUrl = " ";
 
-  Future addPetData(final imageName, XFile image) async {
+  Future addEvents(final imageName, XFile image) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Events");
@@ -90,6 +90,14 @@ class AdminController extends ChangeNotifier {
       print("/////////////////$e");
     }
   }
+  deleteEvent(var time)async{
+    try{
+      await FirebaseFirestore.instance.collection("events").doc(time).delete();
+    }
+        catch(e){
+      print("error=$e");
+        }
+  }
 
   void dataClear() {
     discriptionController.clear();
@@ -98,5 +106,8 @@ class AdminController extends ChangeNotifier {
     imgUrl = " ";
     notifyListeners();
   }
+
+
+
 
 }

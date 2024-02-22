@@ -88,7 +88,7 @@ class EventsAdd extends StatelessWidget {
                                 Size(double.infinity, 50))),
                         onPressed: () {
 if(value.img != null){
-  value.addPetData(value.imageName, value.files);
+  value.addEvents(value.imageName, value.files);
   Navigator.pushReplacementNamed(context, "/events");
 }
                         },

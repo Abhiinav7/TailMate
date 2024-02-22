@@ -19,7 +19,7 @@ class EventModel {
   );
 
   Map<String, dynamic> toJson() => {
-    "name": description,
+    "description": description,
     "imgUrl": imgUrl,
     "time": time,
 
