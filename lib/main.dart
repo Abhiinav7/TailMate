@@ -16,7 +16,10 @@ import 'package:tailmate/firebase_options.dart';
 import 'package:tailmate/view/Login_page/login_page.dart';
 import 'package:tailmate/view/MainPage/mainScreen.dart';
 import 'package:tailmate/view/MainPage/pages/add_pet.dart';
+import 'package:tailmate/view/MainPage/pages/chat.dart';
+import 'package:tailmate/view/MainPage/pages/chat_listPage.dart';
 import 'package:tailmate/view/MainPage/pages/home.dart';
+import 'package:tailmate/view/MainPage/pages/notifications.dart';
 import 'package:tailmate/view/MainPage/pages/wishlist.dart';
 import 'package:tailmate/view/MyPets/mypets.dart';
 import 'package:tailmate/view/MyPets/petCardView.dart';
@@ -24,6 +27,9 @@ import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
 import 'package:tailmate/view/profile_page/profile.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
+
+import 'controller/adoptionController.dart';
+import 'controller/messageController.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,6 +44,8 @@ ChangeNotifierProvider(create:  (context) => LocationController(),),
 ChangeNotifierProvider(create:  (context) => UserController(),),
 ChangeNotifierProvider(create:  (context) => PetController(),),
 ChangeNotifierProvider(create:  (context) => AdminController(),),
+ChangeNotifierProvider(create:  (context) => AdoptController(),),
+ChangeNotifierProvider(create:  (context) => MessageController(),),
       ],
   child: const MyApp()));
 }
@@ -72,6 +80,9 @@ class MyApp extends StatelessWidget {
         "/userpets":(context) => UserPets(),
         "/addevent":(context) => EventsAdd(),
         "/events":(context) => ViewEvents(),
+        "/notification":(context) => Notifications(),
+        "/chatlist":(context) => ChatListPage(),
+        "/chatpage":(context) => ChatPage(),
 
       },
       initialRoute:'/onBoard',

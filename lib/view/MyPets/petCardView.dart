@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
+import 'package:tailmate/controller/adoptionController.dart';
 import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/view/MyPets/components/headerPartCard.dart';
 import 'package:tailmate/view/MyPets/components/reusableContainer.dart';
 
@@ -14,6 +16,8 @@ class PetCardView extends StatelessWidget {
     final data = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
 
     final petController = Provider.of<PetController>(context);
+    final userController = Provider.of<UserController>(context);
+    final adoptController = Provider.of<AdoptController>(context);
     double screenWidth = ScreenUtil.Width(context);
     return Scaffold(
         body: SingleChildScrollView(
@@ -103,9 +107,7 @@ class PetCardView extends StatelessWidget {
               ),
               child: TextButton(
                   onPressed: (){
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      behavior: SnackBarBehavior.floating,
-                        content: Text("Pet delivered succesfully!!")));
+                    adoptController.sendRequest(data["userId"], context,userController.name);
                   }, child: Text("Adopt Me!",style: TextStyle(
                   color: Colors.white,
                   fontSize: 15

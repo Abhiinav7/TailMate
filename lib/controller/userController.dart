@@ -20,6 +20,7 @@ class UserController extends ChangeNotifier {
 
   String name =" ";
   String email =" ";
+  String uid=' ';
  Map<String,dynamic>userDetails={};
 
   Future fetchData() async {
@@ -33,6 +34,8 @@ class UserController extends ChangeNotifier {
       name = data.name;
       notifyListeners();
       email = data.email;
+      notifyListeners();
+      uid=data.id;
       notifyListeners();
       userDetails=docSnapshot.data() as Map<String, dynamic>;
       notifyListeners();

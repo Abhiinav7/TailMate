@@ -9,10 +9,12 @@ class PetModel {
   String petId;
   String petType;
   String userId;
+  String userName;
   var time;
 
   PetModel(
       {
+        required this.userName,
         required this.time,
         required this.userId,
       required this.petType,
@@ -36,7 +38,8 @@ class PetModel {
       petType: json["petType"],
       petId: json["petId"],
       userId: json["userId"],
-  time: json["time"]
+  time: json["time"],
+  userName: json["userName"],
   );
 
   Map<String, dynamic> toJson() => {
@@ -50,6 +53,7 @@ class PetModel {
         "petType": petType,
         "petId": petId,
         "userId": userId,
-    "time":time
+    "time":time,
+    "userName":userName
       };
 }

@@ -142,6 +142,7 @@ void dataClear(){
       print(imageUrl);
       var tim = DateTime.now();
       final petData = PetModel(
+        userName: userController.name,
         time: tim.toString(),
         petType: petType,
         petName: petNameController.text,
@@ -223,6 +224,7 @@ void dataClear(){
       notifyListeners();
       print(imageUrl);
       final petData = PetModel(
+        userName: userController.name,
         time: tim.toString(),
         petType: petType,
         petName: petNameController.text,

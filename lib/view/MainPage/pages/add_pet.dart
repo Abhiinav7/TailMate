@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/services/validation_services.dart';
 import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
 import 'package:tailmate/view/MainPage/widgets/customButton.dart';
@@ -15,6 +16,7 @@ class AddPetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userController=Provider.of<UserController>(context);
     final petKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: MyAppbar(),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
-import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';
@@ -28,7 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     Provider.of<LocationController>(context, listen: false)
         .getCurrentPosition();
     Provider.of<UserController>(context, listen: false).fetchData();
-    // Provider.of<PetController>(context, listen: false).dataClear();
     super.initState();
   }
 
@@ -36,7 +34,6 @@ class _HomeScreenState extends State<HomeScreen> {
     final location = Provider.of<LocationController>(context);
     final userController = Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
-    double screenHeight = ScreenUtil.Height(context);
     return Scaffold(
       drawer: MyDrawer(),
       backgroundColor: Colors.white,
@@ -51,7 +48,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     MyAppbar(
                       actions: [
                         IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushNamed(context, "/notification");
+                            },
                             icon: Icon(
                               Icons.notifications,
                               size: screenWidth / 13.5,

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class MainController extends ChangeNotifier {
   List<String> petCategories = [
-    "Cat",
     "Dog",
+    "Cat",
     "Rabbit",
     "bird",
   ];
