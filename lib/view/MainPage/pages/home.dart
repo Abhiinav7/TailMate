@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
+import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';
@@ -28,12 +30,14 @@ class _HomeScreenState extends State<HomeScreen> {
         .getCurrentPosition();
     Provider.of<UserController>(context, listen: false).fetchData();
     super.initState();
+    Provider.of<PetController>(context,listen: false).dataClear();
   }
 
   Widget build(BuildContext context) {
     final location = Provider.of<LocationController>(context);
     final userController = Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
+    var uid=FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       drawer: MyDrawer(),
       backgroundColor: Colors.white,
@@ -151,8 +155,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               StreamBuilder(
                   stream:
-                  FirebaseFirestore.instance.collection("pets").where(
-                  "petType", isEqualTo: "Cat").snapshots(),
+                  FirebaseFirestore.instance.collection("pets").where("userId",isNotEqualTo: uid).snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData){
                       return GridView.builder(
@@ -169,6 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           itemBuilder: (context, index) {
                             final data = snapshot.data!.docs[index];
+
                             return PetCard(
                               data: data.data(),
                               imageUrl: data["imageUrl"],

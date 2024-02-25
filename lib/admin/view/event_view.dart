@@ -5,8 +5,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/adminController.dart';
 
-class ViewEvents extends StatelessWidget {
-  const ViewEvents({super.key});
+class ViewEventsAdmin extends StatelessWidget {
+  const ViewEventsAdmin({super.key});
 
   @override
   Widget build(BuildContext context) {

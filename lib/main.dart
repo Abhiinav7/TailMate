@@ -12,7 +12,7 @@ import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/firebase_options.dart';
-
+import 'package:tailmate/view/Event_view/events_view.dart';
 import 'package:tailmate/view/Login_page/login_page.dart';
 import 'package:tailmate/view/MainPage/mainScreen.dart';
 import 'package:tailmate/view/MainPage/pages/add_pet.dart';
@@ -27,7 +27,6 @@ import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
 import 'package:tailmate/view/profile_page/profile.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
-
 import 'controller/adoptionController.dart';
 import 'controller/messageController.dart';
 
@@ -79,10 +78,11 @@ class MyApp extends StatelessWidget {
         "/admin":(context) => AdminMain(),
         "/userpets":(context) => UserPets(),
         "/addevent":(context) => EventsAdd(),
-        "/events":(context) => ViewEvents(),
+        "/events":(context) => ViewEventsAdmin(),
         "/notification":(context) => Notifications(),
         "/chatlist":(context) => ChatListPage(),
         "/chatpage":(context) => ChatPage(),
+        "/eventsview":(context) => EventsView(),
 
       },
       initialRoute:'/onBoard',

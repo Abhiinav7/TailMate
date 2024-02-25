@@ -8,13 +8,14 @@ class AdoptController extends ChangeNotifier{
   FirebaseFirestore.instance.collection("adoption");
   final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
-  void sendRequest(String recipientUserId,BuildContext ctx,String senderName) {
+  void sendRequest(String ownerId,BuildContext ctx,String senderName,String ownerName) {
     var time=DateTime.now();
    adoption.doc(time.toString()).set({
      "time":time.toString(),
       'senderId':currentUserId ,
-      'ownerId': recipientUserId,
-      'senderName': senderName,
+     'senderName': senderName,
+      'ownerId': ownerId,
+     "ownerName":ownerName,
       'status': 'pending', // You can update this status as needed
       // Add any other relevant information about the request
     }).then((value)=>ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(

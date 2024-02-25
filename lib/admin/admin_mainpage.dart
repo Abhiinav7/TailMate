@@ -15,7 +15,7 @@ class AdminMain extends StatelessWidget {
     final List pages=[
       UserList(),
       AllPets(),
-      ViewEvents()
+      ViewEventsAdmin()
     ];
     final controller=Provider.of<AdminController>(context);
     return Scaffold(

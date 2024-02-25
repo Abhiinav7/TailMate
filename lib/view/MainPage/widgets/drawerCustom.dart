@@ -23,10 +23,12 @@ class MyDrawer extends StatelessWidget {
         children: [
           UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: Colors.teal.shade500),
-            currentAccountPicture: CircleAvatar(
+            currentAccountPicture:
+            CircleAvatar(
+              // child: Image.asset("assets/images/avatar.png",fit: BoxFit.fill,),
               radius: 30,
               backgroundImage: AssetImage(
-                "assets/images/person.jpg",
+                  "assets/images/avatar.png",
               ),
             ),
             accountName: Text(
@@ -57,7 +59,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, "/eventsview");
+            },
             title: Text(
               "Events",
               style: TextStyle(fontSize: 20),
@@ -70,7 +74,9 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,
-            onTap: () {},
+            onTap: () {
+              Navigator.pushNamed(context, "/notification");
+            },
             title: Text(
               "Notifications",
               style: TextStyle(fontSize: 20),

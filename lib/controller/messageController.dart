@@ -12,18 +12,20 @@ class MessageController extends ChangeNotifier{
   Reference firebaseStorage = FirebaseStorage.instance.ref();
   String downloadurl = "";
 
-  sendMessage(String recieverId, String message) async {
-    final String currentUserId = firebaseAuth.currentUser!.uid;
-    final String currentuseremail = firebaseAuth.currentUser!.email.toString();
+  sendMessage(String recieverId, String recieverName,String message,String senterId,String senterName) async {
+    // final String currentUserId = firebaseAuth.currentUser!.uid;
+    // final String currentuseremail = firebaseAuth.currentUser!.email.toString();
     final Timestamp timestamp = Timestamp.now();
     Message newmessage = Message(
       message: message,
         recieverId: recieverId,
-        senderId: currentUserId,
+        recieverName: recieverName,
+        senderId: senterId,
+        senderName: senterName,
         time: timestamp,
-        senderemail: currentuseremail);
+    );
 
-    List ids = [currentUserId, recieverId];
+    List ids = [senterId, recieverId];
     ids.sort();
     String chatroomid = ids.join("_");
     await firestore

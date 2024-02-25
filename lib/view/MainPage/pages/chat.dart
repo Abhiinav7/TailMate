@@ -1,10 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:tailmate/controller/petController.dart';
-import 'package:tailmate/controller/userController.dart';
-
 import '../../../controller/messageController.dart';
 
 class ChatPage extends StatelessWidget {
@@ -18,6 +17,7 @@ class ChatPage extends StatelessWidget {
     // final petController = Provider.of<PetController>(context);
     final data = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
     final size = MediaQuery.of(context).size;
+    var uid=FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromRGBO(41, 15, 102, 1),
@@ -36,7 +36,7 @@ class ChatPage extends StatelessWidget {
                       },
                       icon: const Icon(Icons.arrow_back_ios)),
                   Text(
-                    data["senderName"],
+                    data["ownerName"],
                     style: GoogleFonts.poppins(
                         fontSize: 22, fontWeight: FontWeight.bold),
                   ),
@@ -64,6 +64,39 @@ class ChatPage extends StatelessWidget {
                     //   padding: const EdgeInsets.only(top: 30),
                     //   child: ChatBubble(service: service, size: size),
                     // ),
+                    child: StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection("chat_room").doc("${data["senderId"]}_${data["ownerId"]}")
+                          .collection("messages").orderBy("time",descending: false).snapshots(),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData){
+                          return ListView.builder(
+                            itemCount: snapshot.data!.docs.length,
+                              itemBuilder: (context, index) {
+                              final messages=snapshot.data!.docs[index];
+                                return Column(
+                                  crossAxisAlignment: messages["senderId"]==uid ? CrossAxisAlignment.start:CrossAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                    constraints: BoxConstraints(
+                                      maxHeight: 50,
+                                      maxWidth: 100
+                                    ),
+                                      // alignment: messages["senderId"]==uid ? Alignment.topLeft:Alignment.topRight,
+                                      color: Colors.black,
+                                        margin: EdgeInsets.all(15),
+                                        padding: EdgeInsets.all(10),
+                                        child: Text(messages["message"],style: TextStyle(fontSize: 15,color: Colors.white),)),
+                                  ],
+                                );
+                              },);
+                        }
+                        else{
+                          return Center(
+                            child: Text("no messages found"),
+                          );
+                        }
+                      },
+                    ),
                   ),
                   Positioned(
                     bottom: 10,
@@ -118,9 +151,10 @@ class ChatPage extends StatelessWidget {
                           ),
                           IconButton(
                               onPressed: () {
+
                                 if (messagecontroller.text.isNotEmpty) {
-                                  msgController.sendMessage(data["senderId"],
-                                      messagecontroller.text);
+                                  msgController.sendMessage(data["ownerId"],data["ownerName"],
+                                      messagecontroller.text,data["senderId"],data["senderName"]);
                                   messagecontroller.clear();
                                 }
                               },

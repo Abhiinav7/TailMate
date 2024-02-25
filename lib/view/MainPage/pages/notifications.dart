@@ -35,7 +35,7 @@ class Notifications extends StatelessWidget {
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
             .collection("adoption")
-            .where('recipient',
+            .where('ownerId',
                 isEqualTo: FirebaseAuth.instance.currentUser!.uid)
             .snapshots(),
         builder: (context, snapshot) {

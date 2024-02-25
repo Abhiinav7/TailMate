@@ -17,14 +17,14 @@ class GoogleNavbar extends StatelessWidget {
       backgroundColor: Colors.white,
       selectedIndex: controller.selectedIndex,
       textStyle: GoogleFonts.alata(
-        fontSize: 15,
+        fontSize: 14,
         color: Colors.indigo,
         fontWeight: FontWeight.w600,
       ),
       haptic: false,
       rippleColor: Colors.blueGrey.shade100,
       hoverColor: Colors.grey,
-      iconSize: 25,
+      iconSize: 24,
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       color: Colors.black,
       activeColor: Colors.indigo[700],
@@ -41,14 +41,14 @@ class GoogleNavbar extends StatelessWidget {
         ),
         GButton(
           icon: Icons.add_circle,
-          text: 'Add',
+          text: 'Sell',
         ),
         GButton(
           icon: Icons.favorite_rounded,
           text: 'Pawlist',
         ),
         GButton(
-          icon: Icons.person,
+          icon: Icons.chat,
           text: 'Chat',
         )
       ],
