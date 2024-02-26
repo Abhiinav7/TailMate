@@ -6,13 +6,14 @@ import 'package:flutter/material.dart';
 class AdoptController extends ChangeNotifier{
   CollectionReference adoption =
   FirebaseFirestore.instance.collection("adoption");
-  final currentUserId = FirebaseAuth.instance.currentUser!.uid;
+  // final currentUserId = FirebaseAuth.instance.currentUser!.uid;
 
-  void sendRequest(String ownerId,BuildContext ctx,String senderName,String ownerName) {
+  void sendRequest(String ownerId,String ownerName,BuildContext ctx,String senderName,String senderId,String petName) {
     var time=DateTime.now();
    adoption.doc(time.toString()).set({
+     "petName":petName,
      "time":time.toString(),
-      'senderId':currentUserId ,
+      'senderId':senderId ,
      'senderName': senderName,
       'ownerId': ownerId,
      "ownerName":ownerName,

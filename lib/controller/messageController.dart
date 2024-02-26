@@ -8,20 +8,23 @@ import '../model/messageModel.dart';
 class MessageController extends ChangeNotifier{
 
 
+  TextEditingController messagecontroller = TextEditingController();
+
+
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Reference firebaseStorage = FirebaseStorage.instance.ref();
   String downloadurl = "";
 
   sendMessage(String recieverId, String recieverName,String message,String senterId,String senterName) async {
-    // final String currentUserId = firebaseAuth.currentUser!.uid;
+    final String currentUserId = firebaseAuth.currentUser!.uid;
     // final String currentuseremail = firebaseAuth.currentUser!.email.toString();
     final Timestamp timestamp = Timestamp.now();
     Message newmessage = Message(
       message: message,
         recieverId: recieverId,
         recieverName: recieverName,
-        senderId: senterId,
+        senderId: currentUserId,
         senderName: senterName,
         time: timestamp,
     );
@@ -30,7 +33,7 @@ class MessageController extends ChangeNotifier{
     ids.sort();
     String chatroomid = ids.join("_");
     await firestore
-        .collection("chat_room")
+        .collection("chat")
         .doc(chatroomid)
         .collection("messages")
         .add(newmessage.toJson());

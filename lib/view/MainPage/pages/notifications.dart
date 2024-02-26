@@ -44,13 +44,13 @@ class Notifications extends StatelessWidget {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   final data=snapshot.data!.docs[index];
-                 return Card(
+                 return  data["status"]!="accepted" && data["status"]!="rejected"? Card(
                     margin: EdgeInsets.all(10),
                     child: Column(
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text("You Have Recieved an Enquiry from ${data["senderName"]}",
+                      Padding(
+                          padding: const EdgeInsets.all(13.0),
+                          child: Text("You Have Recieved an Enquiry from ${data["senderName"]} for ${data["petName"]}",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w400,
@@ -72,7 +72,7 @@ class Notifications extends StatelessWidget {
                         )
                       ],
                     ),
-                  );
+                  ):SizedBox();
                 }
             );
           } else {
