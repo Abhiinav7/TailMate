@@ -22,10 +22,10 @@ class ChatListPage extends StatelessWidget {
         ),
         body: StreamBuilder(
       stream: FirebaseFirestore.instance
-          .collection("adoption")
+          .collection("adoption").where("status",isEqualTo:"accepted" )
           .snapshots(),
       builder: (context, snapshot) {
-        return !snapshot.hasData?CircularProgressIndicator():ListView.builder(
+        return !snapshot.hasData?Center(child: CircularProgressIndicator()):ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               final data = snapshot.data!.docs[index];

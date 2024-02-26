@@ -7,6 +7,7 @@ import '../model/messageModel.dart';
 
 class MessageController extends ChangeNotifier{
 
+
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Reference firebaseStorage = FirebaseStorage.instance.ref();

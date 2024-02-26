@@ -30,7 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
         .getCurrentPosition();
     Provider.of<UserController>(context, listen: false).fetchData();
     super.initState();
-    Provider.of<PetController>(context,listen: false).dataClear();
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      print("build completed");
+      Provider.of<PetController>(context,listen: false).dataClear();
+    });
+
   }
 
   Widget build(BuildContext context) {

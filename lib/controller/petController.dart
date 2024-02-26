@@ -53,7 +53,7 @@ class PetController extends ChangeNotifier {
     notifyListeners();
   }
 void dataClear(){
-  petNameController.clear();
+   petNameController.clear();
   petDiscriptionController.clear();
   petWeightController.clear();
   petAgeController.clear();
