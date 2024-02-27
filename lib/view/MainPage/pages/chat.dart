@@ -9,7 +9,7 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final msgController = Provider.of<MessageController>(context);
+    final msgController = Provider.of<MessageController>(context);
     final data = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     final size = MediaQuery.of(context).size;
     var uid = FirebaseAuth.instance.currentUser!.uid;
@@ -42,11 +42,49 @@ class ChatPage extends StatelessWidget {
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {
-              },
-              icon: const Icon(Icons.clear_all_outlined, color: Colors.white),
-            )
+                 PopupMenuButton(
+                   icon: Icon(Icons.clear_all_outlined,color: Colors.white,),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)),
+                    itemBuilder: (context) {
+                      return [
+                        PopupMenuItem(
+                            child: TextButton(
+                                onPressed: () {
+                                  value.deleteUserAndChat("${data["senderId"]}_${data["ownerId"]}", data["time"],context);
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Delete user"))),
+                        PopupMenuItem(
+                            child: TextButton(
+                                onPressed: () {
+                                  showDialog(
+                                    useSafeArea: true,
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      scrollable: true,
+                                      title: Text("Delete"),
+                                      content: Text("Are you sure !"),
+                                      actions: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("cancel")),
+                                        ElevatedButton(
+                                            onPressed: () {
+value.deleteMesagges("${data["senderId"]}_${data["ownerId"]}");
+                                              Navigator.pop(context);
+                                            },
+                                            child: Text("Yes")),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Text("Clear chat"))),
+                      ];
+                    })
+
           ],
         ),
         body: Column(

@@ -25,7 +25,7 @@ class ChatListPage extends StatelessWidget {
           .collection("adoption").where("status",isEqualTo: "accepted")
           .snapshots(),
       builder: (context, snapshot) {
-        return !snapshot.hasData?Center(child: CircularProgressIndicator()):ListView.builder(
+        return !snapshot.hasData?Center(child: Text(""),):ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               final data = snapshot.data!.docs[index];

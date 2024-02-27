@@ -14,11 +14,11 @@ class PetCardView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final data = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
-
     final petController = Provider.of<PetController>(context);
     final userController = Provider.of<UserController>(context);
     final adoptController = Provider.of<AdoptController>(context);
     double screenWidth = ScreenUtil.Width(context);
+
     return Scaffold(
         body: SingleChildScrollView(
           child: Column(

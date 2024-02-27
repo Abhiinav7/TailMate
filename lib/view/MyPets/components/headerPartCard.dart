@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';
 import 'package:tailmate/view/MainPage/widgets/customAppbar.dart';
+
+import '../../../Utils/constants/screen_utils.dart';
 class HeaderPart extends StatelessWidget {
   const HeaderPart({
     super.key,
@@ -17,14 +19,15 @@ class HeaderPart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHight = ScreenUtil.Height(context);
     return PrimaryHeaderContainer(
-      height: 350,
+      height:screenHight * 0.46 ,
       screenWidth: screenWidth,
       child: Stack(
         children: [
           Container(
               width: screenWidth,
-              height: 350,
+              height: screenHight * 0.46 ,
               child: CachedNetworkImage(
                   fit: BoxFit.cover, imageUrl: data["imageUrl"])),
           MyAppbar(
