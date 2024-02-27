@@ -19,7 +19,7 @@ class PrimaryHeaderContainer extends StatelessWidget {
     return CurvedWidget(
       child: Container(
         width: screenWidth,
-        color: color,
+        color: Color(0xff265073),
         padding: EdgeInsets.all(0),
         child: SizedBox(
           height: height,

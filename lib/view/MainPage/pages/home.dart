@@ -41,6 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final location = Provider.of<LocationController>(context);
     final userController = Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
+    double screenHight = ScreenUtil.Height(context);
     var uid=FirebaseAuth.instance.currentUser!.uid;
     return Scaffold(
       drawer: MyDrawer(),
@@ -50,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               PrimaryHeaderContainer(
+                height: screenHight * 0.4,
                 screenWidth: screenWidth,
                 child: Column(
                   children: [
@@ -128,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             style: GoogleFonts.acme(
                                 shadows: [
                                   BoxShadow(
-                                      color: Colors.teal,
+                                      color: Color(0xff265073),
                                       offset: Offset(4, 4))
                                 ],
                                 fontSize: screenWidth / 14,
@@ -170,7 +172,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           gridDelegate:
                               SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            mainAxisExtent: 222,
+                            mainAxisExtent: screenHight * 0.285,
                             crossAxisSpacing: screenWidth / 32.66,
                             mainAxisSpacing: screenWidth / 32.66,
                           ),

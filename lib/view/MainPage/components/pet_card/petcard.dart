@@ -25,7 +25,7 @@ class PetCard extends StatelessWidget {
     final petController=Provider.of<PetController>(context);
     final userController=Provider.of<UserController>(context);
     double screenWidth = ScreenUtil.Width(context);
-
+    double screenHight = ScreenUtil.Height(context);
 
     return GestureDetector(
       onTap: () {
@@ -33,7 +33,7 @@ Navigator.pushNamed(context, "/petview",arguments: data);
       },
       child: Container(
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.teal.shade400, width: 3),
+            border: Border.all(color:  Color(0xff265073), width: 3),
             borderRadius: BorderRadius.circular(18),
             color: Colors.grey.shade200,
             boxShadow: [
@@ -44,10 +44,11 @@ Navigator.pushNamed(context, "/petview",arguments: data);
                   color: Colors.indigo.withOpacity(0.3))
             ]),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             Container(
               width: screenWidth / 3.01,
-              height: 142,
+              height: screenHight * 0.18,
               margin: EdgeInsets.only(top: 6),
               padding: EdgeInsets.all(3),
               decoration: BoxDecoration(
@@ -62,7 +63,7 @@ Navigator.pushNamed(context, "/petview",arguments: data);
                 // child: Image.network(imageUrl,fit: BoxFit.fill,),
                 child: CachedNetworkImage(
                   placeholder: (context, url) => MyShimmer(
-                    height:142 ,width:screenWidth / 3.01 ,radious: 12,
+                    height:screenHight * 0.18 ,width:screenWidth / 3.01 ,radious: 12,
                     color: Colors.grey,
                   ),
                   errorWidget: (context, url, error) => Icon(Icons.error),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
@@ -13,24 +14,29 @@ class MyDrawer extends StatelessWidget {
     final firebaseController = Provider.of<FirebaseAuthController>(context);
     double screenWidth = ScreenUtil.Width(context);
     return Drawer(
-
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-      backgroundColor: Colors.teal.shade50,
+      backgroundColor: Colors.indigo.shade50,
       width: screenWidth - 70,
-      surfaceTintColor: Colors.teal,
+      surfaceTintColor: Color(0xff265073),
       // shadowColor: Colors.red,
       child: ListView(
         children: [
           UserAccountsDrawerHeader(
-      decoration: BoxDecoration(color: Colors.teal.shade500),
+      decoration: BoxDecoration(color: Color(0xff265073)),
             currentAccountPicture:
-            CircleAvatar(
-              // child: Image.asset("assets/images/avatar.png",fit: BoxFit.fill,),
-              radius: 30,
-              backgroundImage: AssetImage(
-                  "assets/images/avatar.png",
-              ),
-            ),
+           controller.profileUrl=="" ? CircleAvatar(
+             backgroundImage: AssetImage("assets/images/user.png",),
+           ):
+           Container(
+             height: 100,
+             width: 100,
+             child: ClipRRect(
+               borderRadius: BorderRadius.circular(56),
+               child: CachedNetworkImage(
+                   fit: BoxFit.cover,
+                   imageUrl: controller.profileUrl!),
+             ),
+           ),
             accountName: Text(
               controller.name,
               style: TextStyle(
@@ -39,8 +45,8 @@ class MyDrawer extends StatelessWidget {
                   fontWeight: FontWeight.w500),
             ),
             accountEmail: Text(controller.email,
-                style: TextStyle(color: Colors.white, fontSize: 15)),
-          ),
+                style: TextStyle(color: Colors.white, fontSize: 16),
+          ),),
           ListTile(
             textColor: Colors.black,
             iconColor: Colors.indigo,

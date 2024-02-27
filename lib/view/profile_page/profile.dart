@@ -28,7 +28,7 @@ class MyProfile extends StatelessWidget {
                       value.profileUrl==""? CircleAvatar(
                           radius: 45,
                           backgroundImage:
-                              AssetImage("assets/images/person.jpg"),
+                              AssetImage("assets/images/user.png"),
                         ):
                       Container(
                         height: 100,
@@ -79,7 +79,7 @@ class MyProfile extends StatelessWidget {
                         ),
                         ProfileDetailsTab(
                           name: "phone",
-                          value: value.userDetails["phone"],
+                          value: value.userDetails["phone"]=="null"?"add phone number":value.userDetails["phone"],
                           onPressed: () {
                             Navigator.pushNamed(context, "/updatedata",
                                 arguments: [

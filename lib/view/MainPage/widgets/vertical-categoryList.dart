@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/view/categories_view/categories.dart';
+
+import '../../../Utils/constants/screen_utils.dart';
 class VerticalCategory extends StatelessWidget {
   const VerticalCategory({
     super.key,
@@ -9,9 +11,10 @@ class VerticalCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenHight = ScreenUtil.Height(context);
     final controller=Provider.of<MainController>(context);
     return SizedBox(
-      height: 120,
+      height: screenHight * 0.16,
       child: ListView.builder(
           itemCount: 4,
           scrollDirection: Axis.horizontal,
