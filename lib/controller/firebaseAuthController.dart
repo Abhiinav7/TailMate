@@ -67,6 +67,7 @@ class FirebaseAuthController extends ChangeNotifier {
       String userId = authRef.user!.uid;
       if (userId.isNotEmpty) {
         final userDetails = UserModel(
+          profileUrl: "",
             name: nameController.text.trim(),
             id: userId,
             phone: phoneController.text.trim(),
@@ -168,6 +169,7 @@ Future emailVerification()async{
         User? user = authResult.user;
         if (user != null) {
           final userModel = UserModel(
+              profileUrl: "",
               name: user.displayName.toString(),
               id: user.uid,
               phone: user.phoneNumber.toString(),

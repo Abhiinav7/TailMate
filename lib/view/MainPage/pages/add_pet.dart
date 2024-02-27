@@ -249,14 +249,6 @@ class AddPetScreen extends StatelessWidget {
                                   controller.addPetData(
                                       controller.imageName, controller.files);
                                   Fluttertoast.showToast(msg: "Pet added succesfully");
-                                  // controller.selectedIndex=0;
-                              //     controller.img=null;
-                              //     controller.petNameController.clear();
-                              //     controller.petBreedController.clear();
-                              //     controller.petDiscriptionController.clear();
-                              //     controller.petAgeController.clear();
-                              //     controller.petWeightController.clear();
-                              // controller.petGen(" ");
                                   controller.changeScreen(0);
                                   Navigator.pushNamed(context, "/main");
                                 }

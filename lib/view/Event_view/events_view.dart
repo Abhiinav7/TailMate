@@ -45,7 +45,7 @@ class EventsView extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10.0),
-                          child: Text(events["name"],style: TextStyle(
+                          child: Text(events["description"],style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w400,
                             color: Colors.black

@@ -33,15 +33,13 @@ class PetController extends ChangeNotifier {
   ];
 
   final TextEditingController petNameController = TextEditingController();
-  final TextEditingController petDiscriptionController =
-  TextEditingController();
+  final TextEditingController petDiscriptionController = TextEditingController();
   final TextEditingController petWeightController = TextEditingController();
   final TextEditingController petBreedController = TextEditingController();
   final TextEditingController petAgeController = TextEditingController();
    String petType=" ";
   String petGender = " ";
 
-  // String get petGender => _petGender;
 
   petTyp(String value) {
     petType = value;
@@ -54,16 +52,16 @@ class PetController extends ChangeNotifier {
   }
 void dataClear(){
    petNameController.clear();
-  petDiscriptionController.clear();
-  petWeightController.clear();
-  petAgeController.clear();
-  petBreedController.clear();
+   petDiscriptionController.clear();
+   petWeightController.clear();
+   petAgeController.clear();
+   petBreedController.clear();
    petType=" ";
    petGender = " ";
- img = null;
+   img = null;
    imageName='';
-  imgUrl=" ";
-  notifyListeners();
+   imgUrl=" ";
+   notifyListeners();
 }
   CollectionReference collectionReference =
   FirebaseFirestore.instance.collection("pets");
@@ -72,56 +70,38 @@ void dataClear(){
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
   File? img;
-   String imageName='';
-
+  String imageName='';
   late XFile files;
 
-// UserModel? userModel;
   //function for picking image from gallery
-  Future<Object> imagePickCamera() async {
+  Future imagePickCamera() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.camera);
     files = file!;
-    notifyListeners();
-    print('${file?.path}');
-    if (file == null) return "";
+    print('${file.path}');
     final imgTemp = File(file.path);
     this.img = imgTemp;
-    notifyListeners();
     String imgName = DateTime
         .now()
         .millisecondsSinceEpoch
         .toString();
     imageName = imgName;
     notifyListeners();
-    // Map<String,dynamic> data=userController.fetchData() as Map<String, dynamic>;
-    // userModel=data as UserModel?;
-    // notifyListeners();
-    // final imgUrl=addPetData(imgName, file);
-    return file;
   }
 
-  Future<Object> imagePickGallery() async {
+  Future imagePickGallery() async {
     ImagePicker imagePicker = ImagePicker();
     XFile? file = await imagePicker.pickImage(source: ImageSource.gallery);
     files = file!;
-    notifyListeners();
-    print('${file?.path}');
-    if (file == null) return "";
+    print('${file.path}');
     final imgTemp = File(file.path);
     this.img = imgTemp;
-    notifyListeners();
     String imgName = DateTime
         .now()
         .millisecondsSinceEpoch
         .toString();
     imageName = imgName;
     notifyListeners();
-    // Map<String,dynamic> data=userController.fetchData() as Map<String, dynamic>;
-    // userModel=data as UserModel?;
-    // notifyListeners();
-    // final imgUrl=addPetData(imgName, file);
-    return file;
   }
 
   var imgUrl = " ";
@@ -131,7 +111,6 @@ void dataClear(){
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);
-
     Reference referenceImageToUpload =
     referenceDirImages.child(imageName + ".png");
     try {
@@ -214,7 +193,6 @@ void dataClear(){
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);
-
     Reference referenceImageToUpload =
     referenceDirImages.child(imageName + ".png");
     try {
@@ -262,7 +240,5 @@ void dataClear(){
     } catch (e) {
       print("error occured : ${e}");
     }
-
-
   }
 }

@@ -24,7 +24,7 @@ class ChatPage extends StatelessWidget {
     return Consumer<MessageController>(
       builder: (context, value, child) =>Scaffold(
         resizeToAvoidBottomInset: true,
-        // backgroundColor: const Color.fromRGBO(41, 15, 102, 1),
+        backgroundColor: const Color.fromRGBO(239, 237, 247, 1),
         appBar: AppBar(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(19),bottomRight:  Radius.circular(19))),
           leading:IconButton(

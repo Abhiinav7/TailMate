@@ -25,6 +25,7 @@ import 'package:tailmate/view/MyPets/mypets.dart';
 import 'package:tailmate/view/MyPets/petCardView.dart';
 import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
+import 'package:tailmate/view/profile_page/components/updateTextField.dart';
 import 'package:tailmate/view/profile_page/profile.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
 import 'controller/adoptionController.dart';
@@ -83,6 +84,7 @@ class MyApp extends StatelessWidget {
         "/chatlist":(context) => ChatListPage(),
         "/chatpage":(context) => ChatPage(),
         "/eventsview":(context) => EventsView(),
+        "/updatedata":(context) => UpdateField(),
 
       },
       initialRoute:'/onBoard',
