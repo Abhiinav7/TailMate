@@ -9,7 +9,12 @@ class ChatListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
         appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: (){Navigator.pushReplacementNamed(context, "/main");},
+          ),
           backgroundColor: Colors.transparent,
           title: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
@@ -45,7 +50,8 @@ class ChatListPage extends StatelessWidget {
                   onTap: (){
                     Navigator.pushNamed(context, "/chatpage",arguments: datas);
                   },
-                  title: Text(data['ownerId']==FirebaseAuth.instance.currentUser!.uid?data["senderName"]:data['ownerName']),),
+                  title: Text(data['ownerId']==FirebaseAuth.instance.currentUser!.uid?data["senderName"]:data['ownerName']),
+                subtitle:  Text(data['ownerId']==FirebaseAuth.instance.currentUser!.uid?data["senderPhone"]:data['ownerPhone']),),
               ):SizedBox();
             });
       },

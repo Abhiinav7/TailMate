@@ -107,7 +107,7 @@ void dataClear(){
   var imgUrl = " ";
 
   //function to add pet image to firebase storage and call the function to add pet details to cloud store
-  Future addPetData(final imageName, XFile image) async {
+  Future addPetData(final imageName, XFile image,String userPhone,String userName) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);
@@ -121,7 +121,8 @@ void dataClear(){
       print(imageUrl);
       var tim = DateTime.now();
       final petData = PetModel(
-        userName: userController.name,
+        userPhone:userPhone,
+        userName: userName,
         time: tim.toString(),
         petType: petType,
         petName: petNameController.text,
@@ -202,6 +203,7 @@ void dataClear(){
       notifyListeners();
       print(imageUrl);
       final petData = PetModel(
+        userPhone: userController.userDetails["phone"],
         userName: userController.name,
         time: tim.toString(),
         petType: petType,

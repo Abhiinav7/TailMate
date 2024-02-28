@@ -173,7 +173,7 @@ Future emailVerification()async{
               profileUrl: "",
               name: user.displayName.toString(),
               id: user.uid,
-              phone: user.phoneNumber.toString(),
+              phone: user.phoneNumber==null ? "" : user.phoneNumber.toString(),
               email: user.email.toString(),
             );
           firebaseCloudController.userDetailsAdd(user.uid, userModel);

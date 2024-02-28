@@ -247,7 +247,7 @@ class AddPetScreen extends StatelessWidget {
                                 petKey.currentState!.save();
                                 if (controller.img != null) {
                                   controller.addPetData(
-                                      controller.imageName, controller.files);
+                                      controller.imageName, controller.files,userController.userDetails["phone"],userController.name);
                                   Fluttertoast.showToast(msg: "Pet added succesfully");
                                   controller.changeScreen(0);
                                   Navigator.pushNamed(context, "/main");

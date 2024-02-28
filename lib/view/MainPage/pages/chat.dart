@@ -29,7 +29,7 @@ class ChatPage extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(19),bottomRight:  Radius.circular(19))),
           leading:IconButton(
             onPressed: () {
-              Navigator.pushNamed(context, "/main");
+              Navigator.pushReplacementNamed(context, "/main");
             },
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),
@@ -52,7 +52,7 @@ class ChatPage extends StatelessWidget {
                             child: TextButton(
                                 onPressed: () {
                                   value.deleteUserAndChat("${data["senderId"]}_${data["ownerId"]}", data["time"],context);
-                                  Navigator.pop(context);
+                                  // Navigator.pop(context);
                                 },
                                 child: Text("Delete user"))),
                         PopupMenuItem(
@@ -73,7 +73,7 @@ class ChatPage extends StatelessWidget {
                                             child: Text("cancel")),
                                         ElevatedButton(
                                             onPressed: () {
-value.deleteMesagges("${data["senderId"]}_${data["ownerId"]}");
+value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
                                               Navigator.pop(context);
                                             },
                                             child: Text("Yes")),

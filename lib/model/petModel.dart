@@ -10,10 +10,12 @@ class PetModel {
   String petType;
   String userId;
   String userName;
+  String userPhone;
   var time;
 
   PetModel(
       {
+        required this.userPhone,
         required this.userName,
         required this.time,
         required this.userId,
@@ -28,6 +30,7 @@ class PetModel {
       required this.petId});
 
   factory PetModel.fromJson(Map<String, dynamic> json) => PetModel(
+    userPhone: json["userPhone"],
       petName: json["petName"],
       breed: json["breed"],
       gender: json["gender"],
@@ -43,6 +46,7 @@ class PetModel {
   );
 
   Map<String, dynamic> toJson() => {
+    "userPhone":userPhone,
         "petName": petName,
         "breed": breed,
         "gender": gender,

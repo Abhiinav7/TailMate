@@ -108,11 +108,14 @@ class PetCardView extends StatelessWidget {
               child: TextButton(
                   onPressed: (){
                     adoptController.sendRequest(
-                        data["userId"],
-                        data["userName"],
-                        context,
-                        userController.name,
-                        userController.uid,data["petName"]);
+                        ownerId:data["userId"],
+                        ownerName: data["userName"],
+                        ownerPhone: data["userPhone"],
+                        ctx: context,
+                        petName:  data["petName"],
+                       senderName: userController.name,
+                        senderId: userController.uid,
+                       senderPhone:  userController.userDetails["phone"]);
                   }, child: Text("Adopt Me!",style: TextStyle(
                   color: Colors.white,
                   fontSize: 15

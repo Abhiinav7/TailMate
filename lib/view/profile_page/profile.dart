@@ -79,7 +79,7 @@ class MyProfile extends StatelessWidget {
                         ),
                         ProfileDetailsTab(
                           name: "phone",
-                          value: value.userDetails["phone"]=="null"?"add phone number":value.userDetails["phone"],
+                          value: value.userDetails["phone"]==""?"add phone number":value.userDetails["phone"],
                           onPressed: () {
                             Navigator.pushNamed(context, "/updatedata",
                                 arguments: [

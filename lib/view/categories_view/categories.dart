@@ -10,6 +10,8 @@ final String pet;
   @override
   Widget build(BuildContext context) {
     double screenWidth = ScreenUtil.Width(context);
+    double screenHight = ScreenUtil.Height(context);
+
     return Scaffold(
         appBar: AppBar(
             leading: IconButton(
@@ -43,9 +45,9 @@ if(snapshot.hasData){
     gridDelegate:
     SliverGridDelegateWithFixedCrossAxisCount(
     crossAxisCount: 2,
-    mainAxisExtent: 222,
-    crossAxisSpacing: screenWidth / 32.66,
-    mainAxisSpacing: screenWidth / 32.66,
+      mainAxisExtent: screenHight * 0.285,
+      crossAxisSpacing: screenWidth / 32.66,
+      mainAxisSpacing: screenWidth / 32.66,
     ),
     itemBuilder: (context, index) {
     final data = snapshot.data!.docs[index];

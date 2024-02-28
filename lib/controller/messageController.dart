@@ -6,9 +6,11 @@ import 'package:flutter/cupertino.dart';
 import '../model/messageModel.dart';
 
 class MessageController extends ChangeNotifier {
-  deleteMesagges(String chatroomid) async {
+  clearChat(String chatroomid,BuildContext context) async {
     try{
-      await firestore.collection("chat").doc(chatroomid).delete();
+      print(chatroomid);
+      await firestore.collection("chat").doc(chatroomid).delete().then((value) =>
+          Navigator.pushReplacementNamed(context, "/chatlist"));
     }
     catch(e){
       print("error:${e}");
@@ -24,7 +26,7 @@ class MessageController extends ChangeNotifier {
   deleteUserAndChat(String chatroomid,var time,BuildContext context)async{
     try{
       await firestore.collection("chat").doc(chatroomid).delete().
-      then((value) => deleteUser(time)).then((value) => Navigator.pushNamed(context, "/chatlist"));
+      then((value) => deleteUser(time)).then((value) => Navigator.pushReplacementNamed(context, "/chatlist"));
     }
     catch(e){
       print("error:${e}");
