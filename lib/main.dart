@@ -12,6 +12,7 @@ import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/controller/mainController.dart';
 import 'package:tailmate/firebase_options.dart';
+import 'package:tailmate/services/auth_gate.dart';
 import 'package:tailmate/view/Event_view/events_view.dart';
 import 'package:tailmate/view/Login_page/login_page.dart';
 import 'package:tailmate/view/MainPage/mainScreen.dart';
@@ -25,6 +26,7 @@ import 'package:tailmate/view/MyPets/mypets.dart';
 import 'package:tailmate/view/MyPets/petCardView.dart';
 import 'package:tailmate/view/MyPets/updatePet.dart';
 import 'package:tailmate/view/onboard_screen/onboard_screen.dart';
+import 'package:tailmate/view/password_reset_screen/password_reset.dart';
 import 'package:tailmate/view/profile_page/components/updateTextField.dart';
 import 'package:tailmate/view/profile_page/profile.dart';
 import 'package:tailmate/view/signup_page/signup_screen.dart';
@@ -85,9 +87,11 @@ class MyApp extends StatelessWidget {
         "/chatpage":(context) => ChatPage(),
         "/eventsview":(context) => EventsView(),
         "/updatedata":(context) => UpdateField(),
+        "/authcheck":(context) => AuthGate(),
+        "/passreset":(context) => PassReset(),
 
       },
-      initialRoute:'/onBoard',
+      initialRoute:'/authcheck',
     );
   }
 }

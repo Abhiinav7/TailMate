@@ -14,6 +14,7 @@ class FirebaseAuthController extends ChangeNotifier {
   final TextEditingController confirmPassController = TextEditingController();
   final TextEditingController logPassController = TextEditingController();
   final TextEditingController logEmailController = TextEditingController();
+  final TextEditingController passReset = TextEditingController();
   UserController firebaseCloudController = UserController();
 
 //for viewing password on login screen
@@ -104,7 +105,7 @@ Future emailVerification()async{
 }
   Future forgotPass()async{
     try{
-      await auth.sendPasswordResetEmail(email: "abhinavcetl@gmail.com");
+      await auth.sendPasswordResetEmail(email: passReset.text.trim());
       isEmailVerified=true;
       notifyListeners();
     }

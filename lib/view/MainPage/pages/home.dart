@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/Utils/constants/screen_utils.dart';
-import 'package:tailmate/controller/petController.dart';
 import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/controller/location.dart';
 import 'package:tailmate/view/MainPage/components/containers/primary_header.dart';

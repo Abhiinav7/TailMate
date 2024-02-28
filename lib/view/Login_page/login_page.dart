@@ -147,7 +147,8 @@ class LoginScreen extends StatelessWidget {
                                children: [
                                  TextButton(
                                      onPressed: () {
-                                       AuthController.forgotPass();
+                                       Navigator.pushNamed(context, "/passreset");
+                                       // AuthController.forgotPass();
                                      },
                                      child: Text("Forgot password"))
                                ],
