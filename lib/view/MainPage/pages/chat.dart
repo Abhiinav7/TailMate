@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:tailmate/controller/userController.dart';
 import '../../../controller/messageController.dart';
 
 class ChatPage extends StatelessWidget {
@@ -9,20 +9,22 @@ class ChatPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final msgController = Provider.of<MessageController>(context);
+
     final data = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
+    List ids = [data["senderId"],data["ownerId"]];
+    ids.sort();
+    String chatroomid = ids.join("_");
     final size = MediaQuery.of(context).size;
-    var uid = FirebaseAuth.instance.currentUser!.uid;
     ScrollController scrollController = ScrollController();
     void scrollToBottom() {
       scrollController.animateTo(
         scrollController.position.maxScrollExtent,
-        duration: Duration(milliseconds: 500),
+        duration: Duration(milliseconds: 200),
         curve: Curves.easeOut,
       );
     }
-    return Consumer<MessageController>(
-      builder: (context, value, child) =>Scaffold(
+    return Consumer2<MessageController,UserController>(
+      builder: (context, value,userController, child) =>Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: const Color.fromRGBO(239, 237, 247, 1),
         appBar: AppBar(
@@ -37,7 +39,7 @@ class ChatPage extends StatelessWidget {
           title: Container(
             margin: EdgeInsets.symmetric(horizontal: 30),
             child: Text(
-              data['ownerId'] == uid ? data["senderName"] : data['ownerName'],
+              data['ownerId'] == userController.uid ? data["senderName"] : data['ownerName'],
               style: TextStyle(color: Colors.white, fontSize: 25, fontWeight: FontWeight.bold),
             ),
           ),
@@ -51,7 +53,7 @@ class ChatPage extends StatelessWidget {
                         PopupMenuItem(
                             child: TextButton(
                                 onPressed: () {
-                                  value.deleteUserAndChat("${data["senderId"]}_${data["ownerId"]}", data["time"],context);
+                                  value.deleteUser(data["time"],context);
                                   // Navigator.pop(context);
                                 },
                                 child: Text("Delete user"))),
@@ -73,7 +75,7 @@ class ChatPage extends StatelessWidget {
                                             child: Text("cancel")),
                                         ElevatedButton(
                                             onPressed: () {
-value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
+value.clearChat(chatroomid,context);
                                               Navigator.pop(context);
                                             },
                                             child: Text("Yes")),
@@ -89,7 +91,6 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
         ),
         body: Column(
           children: [
-
             Expanded(
               child: Container(
                 // messages container
@@ -100,7 +101,7 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection("chat")
-                      .doc("${data["senderId"]}_${data["ownerId"]}")
+                      .doc(chatroomid)
                       .collection("messages")
                       .orderBy("time", descending: false)
                       .snapshots(),
@@ -112,7 +113,7 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
                         itemBuilder: (context, index) {
                           final messages = snapshot.data!.docs[index];
                           return Column(
-                            crossAxisAlignment: messages["senderId"] == uid
+                            crossAxisAlignment: messages["senderId"] == userController.uid
                                 ? CrossAxisAlignment.end
                                 : CrossAxisAlignment.start,
                             children: [
@@ -120,7 +121,7 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
                                 constraints: BoxConstraints(maxHeight: size.height
                                     , maxWidth: size.width - 120),
                                 decoration: BoxDecoration(
-                                  color: messages["senderId"] == uid ? Colors.black : Colors.teal,
+                                  color: messages["senderId"] == userController.uid ? Colors.black : Colors.teal,
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 margin: EdgeInsets.all(15),
@@ -130,6 +131,7 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
                                   style: TextStyle(fontSize: 16, color: Colors.white, fontWeight: FontWeight.w400),
                                 ),
                               ),
+
                             ],
                           );
                         },
@@ -144,7 +146,7 @@ value.clearChat("${data["senderId"]}_${data["ownerId"]}",context);
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 5,vertical: 5),
+              margin: EdgeInsets.symmetric(horizontal: 5,vertical: 8),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
                 color: Color.fromRGBO(41, 15, 102, 1),),

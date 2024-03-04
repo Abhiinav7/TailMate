@@ -11,10 +11,11 @@ class VerticalCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double screenHight = ScreenUtil.Height(context);
+    // double screenHight = ScreenUtil.Height(context);
+    double screenWidth = ScreenUtil.Width(context);
     final controller=Provider.of<MainController>(context);
     return SizedBox(
-      height: screenHight * 0.16,
+      height: screenWidth / 2.8,
       child: ListView.builder(
           itemCount: 4,
           scrollDirection: Axis.horizontal,
@@ -31,8 +32,8 @@ class VerticalCategory extends StatelessWidget {
                       },
                       child: Container(
                         margin: EdgeInsets.symmetric(horizontal: 12,vertical: 6),
-                        height: 70,
-                        width: 70,
+                        height: screenWidth / 5.14,
+                        width: screenWidth / 5.14,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(35),
                           image: DecorationImage(

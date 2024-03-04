@@ -24,6 +24,7 @@ class UserController extends ChangeNotifier {
   String uid = ' ';
   Map<String, dynamic> userDetails = {};
   String profileUrl="";
+  // var currentUserId=FirebaseAuth.instance.currentUser!.uid;
 
   Future fetchData() async {
     final userId = FirebaseAuth.instance.currentUser!.uid;

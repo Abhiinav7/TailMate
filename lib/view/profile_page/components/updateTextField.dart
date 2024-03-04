@@ -54,10 +54,11 @@ class UpdateField extends StatelessWidget {
             ),
             MyTextfields(
               controller: controller.fieldController,
-              horizontalPadding: 10,
+              horizontalPadding: 20,
+              verticalPadding: 15,
               validator: (v) {},
               keyboardType: TextInputType.name,
-              hintText: 'Enter Name',
+              hintText: field,
             ),
             SizedBox(
               height: 30,

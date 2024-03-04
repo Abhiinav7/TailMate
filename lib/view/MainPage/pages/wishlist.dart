@@ -6,13 +6,15 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/controller/userController.dart';
 
 class WishlistPets extends StatelessWidget {
   const WishlistPets({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller=Provider.of<PetController>(context);
+    final petController=Provider.of<PetController>(context);
+    final userController=Provider.of<UserController>(context);
     return Scaffold(
       appBar: AppBar(
         title: Container(
@@ -29,7 +31,7 @@ class WishlistPets extends StatelessWidget {
       body: Padding(
           padding: EdgeInsets.symmetric(horizontal: 8,vertical: 5),
       child:  StreamBuilder(
-        stream: controller.userCollection.doc(controller.userId).collection("wishlist").snapshots(),
+        stream: petController.userCollection.doc(userController.uid).collection("wishlist").snapshots(),
         builder: (context, snapshot) {
           if(snapshot.hasData){
             return ListView.builder(
@@ -54,7 +56,7 @@ class WishlistPets extends StatelessWidget {
                       ),
                     ),
                     trailing: IconButton(onPressed: (){
-                      controller.deleteWishlist(data["time"]);
+                      petController.deleteWishlist(data["time"],userController.uid);
                     }, icon: Icon(Icons.delete)),
                   ),
                 );

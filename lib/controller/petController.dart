@@ -16,12 +16,6 @@ class PetController extends ChangeNotifier {
     notifyListeners();
   }
 
-//wish list button state change
-//   bool wishlist=false;
-//   isclicked(){
-//     wishlist=!wishlist;
-//     notifyListeners();
-//   }
 
   UserController userController = UserController();
   final List<String> petTypesList = [
@@ -67,7 +61,7 @@ void dataClear(){
   FirebaseFirestore.instance.collection("pets");
   CollectionReference userCollection =
   FirebaseFirestore.instance.collection("user");
-  final userId = FirebaseAuth.instance.currentUser!.uid;
+
 
   File? img;
   String imageName='';
@@ -107,7 +101,7 @@ void dataClear(){
   var imgUrl = " ";
 
   //function to add pet image to firebase storage and call the function to add pet details to cloud store
-  Future addPetData(final imageName, XFile image,String userPhone,String userName) async {
+  Future addPetData({required String imageName, required XFile image,required String userPhone,required String userName,required String userId}) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);
@@ -156,7 +150,7 @@ void dataClear(){
     }
   }
 
-  Future addWishlist(Map<String,dynamic> data) async {
+  Future addWishlist(Map<String,dynamic> data,String userId) async {
     try {
       var time = DateTime.now();
       userCollection
@@ -179,7 +173,7 @@ void dataClear(){
     }
   }
 
-  Future deleteWishlist(time) async {
+  Future deleteWishlist(time,String userId) async {
     try {
       userCollection
           .doc(userId)
@@ -190,7 +184,7 @@ void dataClear(){
     }
   }
 
-  Future petDetailsUpdate(final imageName, XFile image, var tim) async {
+  Future petDetailsUpdate(final imageName, XFile image, var tim,String userId) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);

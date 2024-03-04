@@ -16,7 +16,7 @@ class AddPetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userController=Provider.of<UserController>(context);
+    // final userController=Provider.of<UserController>(context);
     final petKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: MyAppbar(),
@@ -41,8 +41,8 @@ class AddPetScreen extends StatelessWidget {
               ),
               Form(
                 key: petKey,
-                child: Consumer<PetController>(
-                  builder: (context, controller, child) => Column(
+                child: Consumer2<PetController,UserController>(
+                  builder: (context, controller,userController, child) => Column(
                     children: [
                       controller.img == null
                           ? Container(
@@ -247,7 +247,7 @@ class AddPetScreen extends StatelessWidget {
                                 petKey.currentState!.save();
                                 if (controller.img != null) {
                                   controller.addPetData(
-                                      controller.imageName, controller.files,userController.userDetails["phone"],userController.name);
+                                    imageName:controller.imageName,image: controller.files, userPhone:userController.userDetails["phone"], userName: userController.name,userId: userController.uid );
                                   Fluttertoast.showToast(msg: "Pet added succesfully");
                                   controller.changeScreen(0);
                                   Navigator.pushNamed(context, "/main");

@@ -6,32 +6,22 @@ import 'package:flutter/cupertino.dart';
 import '../model/messageModel.dart';
 
 class MessageController extends ChangeNotifier {
-  clearChat(String chatroomid,BuildContext context) async {
-    try{
-      print(chatroomid);
-      await firestore.collection("chat").doc(chatroomid).delete().then((value) =>
-          Navigator.pushReplacementNamed(context, "/chatlist"));
+ Future<void> clearChat(String chatroomid,BuildContext context) async {
+    final QuerySnapshot snapshot = await firestore.collection("chat").doc(chatroomid).collection("messages").get();
+    final List<Future<void>> futures = [];
+    for (final DocumentSnapshot doc in snapshot.docs) {
+      futures.add(doc.reference.delete());
     }
-    catch(e){
-      print("error:${e}");
-    }
+    await Future.wait(futures);
   }
 
   CollectionReference adoption =
       FirebaseFirestore.instance.collection("adoption");
 
-  deleteUser(var time) async {
-    await adoption.doc(time).delete();
+  deleteUser(var time,BuildContext context) async {
+    await adoption.doc(time).delete().then((value) => Navigator.pushReplacementNamed(context, "/chatlist"));
   }
-  deleteUserAndChat(String chatroomid,var time,BuildContext context)async{
-    try{
-      await firestore.collection("chat").doc(chatroomid).delete().
-      then((value) => deleteUser(time)).then((value) => Navigator.pushReplacementNamed(context, "/chatlist"));
-    }
-    catch(e){
-      print("error:${e}");
-    }
-  }
+
 
 
   TextEditingController messagecontroller = TextEditingController();
@@ -39,7 +29,6 @@ class MessageController extends ChangeNotifier {
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Reference firebaseStorage = FirebaseStorage.instance.ref();
-  String downloadurl = "";
 
   sendMessage(String recieverId, String recieverName, String message,
       String senterId, String senterName) async {
@@ -48,8 +37,8 @@ class MessageController extends ChangeNotifier {
     final Timestamp timestamp = Timestamp.now();
     Message newmessage = Message(
       message: message,
-      recieverId: recieverId,
-      recieverName: recieverName,
+      // recieverId: recieverId,
+      // recieverName: recieverName,
       senderId: currentUserId,
       senderName: senterName,
       time: timestamp,

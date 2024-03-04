@@ -38,7 +38,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform
   );
-  runApp(MultiProvider(
+  runApp(
+      MultiProvider(
       providers: [
 ChangeNotifierProvider(create:  (context) => FirebaseAuthController(),),
 ChangeNotifierProvider(create:  (context) => MainController(),),

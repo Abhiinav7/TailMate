@@ -118,7 +118,7 @@ Navigator.pushNamed(context, "/petview",arguments: data);
                           MaterialStatePropertyAll(Colors.white),
                           iconSize: MaterialStatePropertyAll(30)),
                       onPressed: () {
-                          petController.addWishlist(data);
+                          petController.addWishlist(data,userController.uid);
 
                       },
                       icon: Icon(Icons.favorite_border )),

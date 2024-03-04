@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/petController.dart';
+import 'package:tailmate/controller/userController.dart';
 import 'package:tailmate/services/validation_services.dart';
 import 'package:tailmate/view/MainPage/widgets/customButton.dart';
 import 'package:tailmate/widgets/CustomTextfield.dart';
@@ -17,6 +18,7 @@ class UpdatePet extends StatelessWidget {
   Widget build(BuildContext context) {
     final petKey = GlobalKey<FormState>();
     final petControllers=Provider.of<PetController>(context);
+    final userController=Provider.of<UserController>(context);
     final arg = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
    petControllers.imgUrl=arg["imageUrl"];
    // petControllers.petType=arg["petType"];
@@ -257,7 +259,7 @@ var time=arg["time"];
                                 petKey.currentState!.save();
                                 // if (controller.img != null) {
                                   controller.petDetailsUpdate(
-                                      controller.imageName, controller.files,time);
+                                      controller.imageName, controller.files,time,userController.uid);
                                   Fluttertoast.showToast(msg: "Pet details updated");
                                   // controller.selectedIndex=0;
                                   //     controller.img=null;
