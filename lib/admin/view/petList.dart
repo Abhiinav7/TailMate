@@ -19,11 +19,11 @@ class AllPets extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Text(
-            "User Pets.",
+            "User Pets",
             style: GoogleFonts.aDLaMDisplay(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
-                color: Colors.teal),
+                color: Colors.indigo),
           ),
         ),
       ),
@@ -36,13 +36,13 @@ class AllPets extends StatelessWidget {
               itemBuilder: (context, index) {
                 final data=snapshot.data!.docs[index];
                 return Card(
-
+color: Colors.indigo.shade50,
                   child: ListTile(
                     onTap: (){
                       Navigator.pushNamed(context, "/petview",arguments: data.data());
                     },
-                    title: Text(data["petName"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
-                    subtitle:Text( data["breed"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
+                    title: Text(data["petName"],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                    subtitle:Text( data["breed"],style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
                     leading: Container(
                       height: 56,
                       width: 56,
@@ -53,34 +53,9 @@ class AllPets extends StatelessWidget {
                             imageUrl: data["imageUrl"]),
                       ),
                     ),
-                    trailing: SizedBox(
-                      width: 100,
-                      child: Row(
-                        children: [
-                          IconButton(onPressed: (){
-                            Navigator.pushNamed(context, "/updatepet",
-                                arguments:
-                                // {
-                                // "age": data["age"],
-                                // "petName": data["petName"],
-                                // "breed": data["breed"],
-                                // "gender": data["gender"],
-                                // "imageUrl": data["imageUrl"],
-                                // "weight": data["weight"],
-                                // "discription": data["discription"],
-                                // "petType": data["petType"],
-                                // "time":data["time"]
-                                data.data()
-
-                              // }
-                            );
-                          }, icon: Icon(Icons.edit)),
-                          IconButton(onPressed: (){
-                            petController.myPetDelete(data["time"]);
-                          }, icon: Icon(Icons.delete)),
-                        ],
-                      ),
-                    ),
+                    trailing: IconButton(onPressed: (){
+                      petController.myPetDelete(data["time"]);
+                    }, icon: Icon(Icons.delete)),
                   ),
                 );
               },);

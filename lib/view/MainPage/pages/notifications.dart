@@ -16,7 +16,7 @@ class Notifications extends StatelessWidget {
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back,
-            color: Colors.teal,
+            color: Colors.indigo,
           ),
           onPressed: () {
             Navigator.pop(context);
@@ -28,7 +28,7 @@ class Notifications extends StatelessWidget {
           child: Text(
             "Notification",
             style: GoogleFonts.aDLaMDisplay(
-                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.teal),
+                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.indigo),
           ),
         ),
       ),

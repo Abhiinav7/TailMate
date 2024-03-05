@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:tailmate/controller/adminController.dart';
 import 'package:tailmate/view/MainPage/widgets/customButton.dart';
-import 'package:tailmate/widgets/CustomTextfield.dart';
+
 
 class EventsAdd extends StatelessWidget {
   const EventsAdd({super.key});
@@ -15,7 +15,7 @@ class EventsAdd extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back,color: Colors.indigo,),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -26,7 +26,7 @@ class EventsAdd extends StatelessWidget {
           child: Text(
             "Add Events",
             style: GoogleFonts.aDLaMDisplay(
-                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.teal),
+                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.indigo),
           ),
         ),
       ),
@@ -35,7 +35,7 @@ class EventsAdd extends StatelessWidget {
         child: SingleChildScrollView(
           child: Consumer<AdminController>(
             builder: (context, value, child) => Column(
-              // mainAxisAlignment:value.img ==null ? MainAxisAlignment.center : MainAxisAlignment.end,
+
               children: [
                 value.img == null
                     ? SizedBox()
@@ -88,7 +88,7 @@ class EventsAdd extends StatelessWidget {
                                 Size(double.infinity, 50))),
                         onPressed: () {
 if(value.img != null){
-  value.addEvents(value.imageName, value.files);
+  value.addEvents(value.imageName, value.files,context);
   Navigator.pushReplacementNamed(context, "/events");
 }
                         },

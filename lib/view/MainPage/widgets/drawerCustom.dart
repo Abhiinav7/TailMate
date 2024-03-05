@@ -55,7 +55,7 @@ class MyDrawer extends StatelessWidget {
             },
             title: Text(
               "Profile",
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
             ),
             leading: Icon(
               Icons.person,
@@ -70,8 +70,7 @@ class MyDrawer extends StatelessWidget {
             },
             title: Text(
               "Events",
-              style: TextStyle(fontSize: 20),
-            ),
+              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),            ),
             leading: Icon(
               Icons.event_note_rounded,
               size: 25,
@@ -85,8 +84,7 @@ class MyDrawer extends StatelessWidget {
             },
             title: Text(
               "Notifications",
-              style: TextStyle(fontSize: 20),
-            ),
+              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),            ),
             leading: Icon(
               Icons.notifications_active_outlined,
               size: 25,
@@ -100,23 +98,9 @@ class MyDrawer extends StatelessWidget {
             },
             title: Text(
               "My Pets",
-              style: TextStyle(fontSize: 20),
-            ),
+              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),            ),
             leading: Icon(
               Icons.pets_sharp,
-              size: 25,
-            ),
-          ),
-          ListTile(
-            textColor: Colors.black,
-            iconColor: Colors.indigo,
-            onTap: () {},
-            title: Text(
-              "Settings",
-              style: TextStyle(fontSize: 20),
-            ),
-            leading: Icon(
-              Icons.settings,
               size: 25,
             ),
           ),
@@ -128,8 +112,7 @@ class MyDrawer extends StatelessWidget {
             },
             title: Text(
               "Logout",
-              style: TextStyle(fontSize: 20),
-            ),
+              style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500), ),
             leading: Icon(
               Icons.logout_outlined,
               size: 25,

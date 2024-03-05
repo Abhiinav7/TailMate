@@ -9,10 +9,19 @@ class EventsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold (
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(
+            Icons.arrow_back,
+            color: Colors.indigo,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Text(
-            "Events.",
+            "Events",
             style: GoogleFonts.aDLaMDisplay(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
@@ -29,7 +38,8 @@ class EventsView extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final events = snapshot.data!.docs[index];
                   return Card(
-                    surfaceTintColor: Colors.white,
+                    color: Colors.indigo.shade200,
+                    surfaceTintColor: Colors.indigo,
                     margin: EdgeInsets.all(10),
                     child: Column(
                       children: [

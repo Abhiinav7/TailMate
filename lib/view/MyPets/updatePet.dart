@@ -18,7 +18,6 @@ class UpdatePet extends StatelessWidget {
   Widget build(BuildContext context) {
     final petKey = GlobalKey<FormState>();
     final petControllers=Provider.of<PetController>(context);
-    final userController=Provider.of<UserController>(context);
     final arg = ModalRoute.of(context)!.settings.arguments as Map<String,dynamic>;
    petControllers.imgUrl=arg["imageUrl"];
    // petControllers.petType=arg["petType"];
@@ -55,10 +54,10 @@ var time=arg["time"];
               ),
               Form(
                 key: petKey,
-                child: Consumer<PetController>(
-                  builder: (context, controller, child) => Column(
+                child: Consumer2<PetController,UserController>(
+                  builder: (context, petController,userController, child) => Column(
                     children: [
-                      controller.img==null
+                      petController.img==null
                           ? Container(
                         height: 100,
                         width: 100,
@@ -76,7 +75,7 @@ var time=arg["time"];
                             borderRadius: BorderRadius.circular(130),
                             image: DecorationImage(
                                 fit: BoxFit.fill,
-                                image: FileImage(controller.img!))),
+                                image: FileImage(petController.img!))),
                       ),
                       SizedBox(
                         height: 15,
@@ -103,14 +102,14 @@ var time=arg["time"];
                                             height: 35,
                                             width:200,
                                             onTap: (){
-                                              controller.imagePickCamera();
+                                              petController.imagePickCamera();
                                               Navigator.pop(context);
                                             }, text: "Camera"),
                                         MyButton(
                                             height: 35,
                                             width:200,
                                             onTap: (){
-                                              controller.imagePickGallery();
+                                              petController.imagePickGallery();
                                               Navigator.pop(context);
                                             }, text: "Gallery"),
                                       ],
@@ -118,7 +117,7 @@ var time=arg["time"];
                               );
                             },
                           );
-// controller.imagePickCamera();
+
                         } ,
                       ),
                       SizedBox(
@@ -130,7 +129,7 @@ var time=arg["time"];
                         popupProps: PopupProps.menu(
                           showSelectedItems: true,
                         ),
-                        items: controller.petTypesList,
+                        items: petController.petTypesList,
                         dropdownDecoratorProps: DropDownDecoratorProps(
                           dropdownSearchDecoration: InputDecoration(
                             icon: Icon(Icons.pets),
@@ -140,10 +139,10 @@ var time=arg["time"];
                         ),
                         onChanged: (value) {
                           if (value != null) {
-                            controller.petTyp(value);
+                            petController.petTyp(value);
                           }
                         },
-                        selectedItem: controller.petType,
+                        selectedItem: petController.petType,
                       ),
                       SizedBox(
                         height: 15,
@@ -153,7 +152,7 @@ var time=arg["time"];
                         horizontalPadding: 8,
                         verticalPadding: 16,
                         validator: (value) => Validation.validateName(value!),
-                        controller: controller.petNameController,
+                        controller: petController.petNameController,
                         keyboardType: TextInputType.name,
                         hintText: 'Enter Pet Name',
                       ),
@@ -165,7 +164,7 @@ var time=arg["time"];
                         horizontalPadding: 8,
                         verticalPadding: 15,
                         validator: (value) => Validation.validateFields(value!),
-                        controller: controller.petBreedController,
+                        controller: petController.petBreedController,
                         keyboardType: TextInputType.name,
                         hintText: 'Enter breed name',
                       ),
@@ -177,7 +176,7 @@ var time=arg["time"];
                         horizontalPadding: 8,
                         verticalPadding: 20,
                         validator: (value) => Validation.validateFields(value!),
-                        controller: controller.petDiscriptionController,
+                        controller: petController.petDiscriptionController,
                         keyboardType: TextInputType.name,
                         hintText: 'About pet!',
                       ),
@@ -194,9 +193,9 @@ var time=arg["time"];
                         child: RadioListTile(
                           title: const Text('Male'),
                           value: "male",
-                          groupValue: controller.petGender,
+                          groupValue: petController.petGender,
                           onChanged: (String? value) {
-                            controller.petGen(value!);
+                            petController.petGen(value!);
                           },
                         ),
                       ),
@@ -205,9 +204,9 @@ var time=arg["time"];
                         child: RadioListTile(
                           title: const Text('Female'),
                           value: "female",
-                          groupValue: controller.petGender,
+                          groupValue: petController.petGender,
                           onChanged: (String? value) {
-                            controller.petGen(value!);
+                            petController.petGen(value!);
                           },
                         ),
                       ),
@@ -220,7 +219,7 @@ var time=arg["time"];
                         horizontalPadding: 8,
                         verticalPadding: 15,
                         validator: (value) => Validation.validateFields(value!),
-                        controller: controller.petAgeController,
+                        controller: petController.petAgeController,
                         keyboardType:
                         TextInputType.numberWithOptions(decimal: true),
                         hintText: 'Enter pet age',
@@ -234,8 +233,8 @@ var time=arg["time"];
                         horizontalPadding: 8,
                         verticalPadding: 15,
                         validator: (value) => Validation.validateFields(value!),
-                        controller: controller.petWeightController,
-                        keyboardType: TextInputType.name,
+                        controller: petController.petWeightController,
+                        keyboardType: TextInputType.number,
                         hintText: 'Enter pet weight',
                       ),
                       SizedBox(
@@ -248,30 +247,17 @@ var time=arg["time"];
                                 backgroundColor: MaterialStatePropertyAll(
                                     Colors.indigo.shade400)),
                             onPressed: () {
-                              // if (controller.img == null) {
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //       SnackBar(
-                              //           behavior: SnackBarBehavior.floating,
-                              //           content: Text("Image is empty")));
-                              // }
-
                               if (petKey.currentState!.validate()) {
                                 petKey.currentState!.save();
-                                // if (controller.img != null) {
-                                  controller.petDetailsUpdate(
-                                      controller.imageName, controller.files,time,userController.uid);
+                                  petController.petDetailsUpdate(
+                                    userName: userController.name,
+                                    userPhone: userController.userDetails["phone"],
+                                    imageName: petController.imageName,
+                                      tim: time,
+                                      image: petController.files,
+                                      userId:userController.uid);
                                   Fluttertoast.showToast(msg: "Pet details updated");
-                                  // controller.selectedIndex=0;
-                                  //     controller.img=null;
-                                  //     controller.petNameController.clear();
-                                  //     controller.petBreedController.clear();
-                                  //     controller.petDiscriptionController.clear();
-                                  //     controller.petAgeController.clear();
-                                  //     controller.petWeightController.clear();
-                                  // controller.petGen(" ");
-
-                                // }
-                                controller.changeScreen(0);
+                                petController.changeScreen(0);
                              Navigator.pushNamed(context, "/main");
                               }
                             },

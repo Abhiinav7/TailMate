@@ -19,13 +19,12 @@ class MessageController extends ChangeNotifier {
       FirebaseFirestore.instance.collection("adoption");
 
   deleteUser(var time,BuildContext context) async {
-    await adoption.doc(time).delete().then((value) => Navigator.pushReplacementNamed(context, "/chatlist"));
+    await adoption.doc(time).delete().then((value) => Navigator.pop(context)).then((value) => Navigator.pop(context));
   }
 
 
 
   TextEditingController messagecontroller = TextEditingController();
-
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   Reference firebaseStorage = FirebaseStorage.instance.ref();

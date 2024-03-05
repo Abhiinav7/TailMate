@@ -19,7 +19,7 @@ class ViewEventsAdmin extends StatelessWidget {
           child: Text(
             "Events",
             style: GoogleFonts.aDLaMDisplay(
-                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.teal),
+                fontSize: 20, fontWeight: FontWeight.w900, color: Colors.indigo),
           ),
         ),
       ),
@@ -46,14 +46,17 @@ class ViewEventsAdmin extends StatelessWidget {
                         adminController.deleteEvent(events["time"]);
                       }
                     },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      height: 250,
-                      width: double.infinity,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: CachedNetworkImage(
-                            fit: BoxFit.fill, imageUrl: events["imgUrl"]),
+                    child: Card(
+                      color: Colors.indigo,
+                      child: Container(
+                        margin: EdgeInsets.all(5),
+                        height: 250,
+                        width: double.infinity,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: CachedNetworkImage(
+                              fit: BoxFit.fill, imageUrl: events["imgUrl"]),
+                        ),
                       ),
                     ),
                   );

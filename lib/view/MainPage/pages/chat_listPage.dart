@@ -11,17 +11,19 @@ class ChatListPage extends StatelessWidget {
     return Scaffold(
 
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: (){Navigator.pushReplacementNamed(context, "/main");},
-          ),
+          // leading: IconButton(
+          //   icon: Icon(Icons.arrow_back),
+          //   onPressed: (){Navigator.pushReplacementNamed(context, "/main");},
+          // ),
           backgroundColor: Colors.transparent,
           title: Container(
             padding: EdgeInsets.symmetric(horizontal: 5),
             child: Text(
               "PawChat",
               style: GoogleFonts.aDLaMDisplay(
-                  fontSize: 20, fontWeight: FontWeight.w900, color: Colors.teal),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.indigo),
             ),
           ),
         ),
@@ -40,6 +42,7 @@ class ChatListPage extends StatelessWidget {
               return data['ownerId']==FirebaseAuth.instance.currentUser!.uid||data['senderId']==FirebaseAuth.instance.currentUser!.uid?
               Card(
                 elevation:3 ,
+
                 child: ListTile(
 
                   titleTextStyle: TextStyle(

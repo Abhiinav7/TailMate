@@ -31,7 +31,7 @@ class ChatPage extends StatelessWidget {
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(19),bottomRight:  Radius.circular(19))),
           leading:IconButton(
             onPressed: () {
-              Navigator.pushReplacementNamed(context, "/main");
+              Navigator.pop(context);
             },
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
           ),

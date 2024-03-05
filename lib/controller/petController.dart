@@ -18,7 +18,7 @@ class PetController extends ChangeNotifier {
 
 
   UserController userController = UserController();
-  final List<String> petTypesList = [
+   List<String> petTypesList = [
     "Cat",
     "Dog",
     "Rabbit",
@@ -26,11 +26,11 @@ class PetController extends ChangeNotifier {
     "other"
   ];
 
-  final TextEditingController petNameController = TextEditingController();
-  final TextEditingController petDiscriptionController = TextEditingController();
-  final TextEditingController petWeightController = TextEditingController();
-  final TextEditingController petBreedController = TextEditingController();
-  final TextEditingController petAgeController = TextEditingController();
+   TextEditingController petNameController = TextEditingController();
+   TextEditingController petDiscriptionController = TextEditingController();
+   TextEditingController petWeightController = TextEditingController();
+   TextEditingController petBreedController = TextEditingController();
+   TextEditingController petAgeController = TextEditingController();
    String petType=" ";
   String petGender = " ";
 
@@ -184,7 +184,7 @@ void dataClear(){
     }
   }
 
-  Future petDetailsUpdate(final imageName, XFile image, var tim,String userId) async {
+  Future petDetailsUpdate({final imageName, required XFile image, var tim,required String userId,required String userName,required String userPhone}) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Pet Images").child(userId);
@@ -197,9 +197,9 @@ void dataClear(){
       notifyListeners();
       print(imageUrl);
       final petData = PetModel(
-        userPhone: userController.userDetails["phone"],
-        userName: userController.name,
-        time: tim.toString(),
+        userPhone: userPhone,
+        userName: userName,
+        time: tim,
         petType: petType,
         petName: petNameController.text,
         breed: petBreedController.text,
@@ -213,7 +213,8 @@ void dataClear(){
             .id,
         userId: userId,
       );
-      collectionReference.doc(tim).update(petData.toJson());
+      print(petData.toJson());
+      await collectionReference.doc(tim).update(petData.toJson()).then((value) => dataClear());
 
     } on FirebaseException catch (error) {
       print(error.code);

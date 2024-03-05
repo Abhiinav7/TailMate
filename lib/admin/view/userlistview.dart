@@ -15,17 +15,17 @@ class UserList extends StatelessWidget {
         actions: [
           IconButton(onPressed: (){
 controller.signOut(context);
-          }, icon: Icon(Icons.logout_rounded))
+          }, icon: Icon(Icons.logout_rounded,color: Colors.indigo,))
         ],
         backgroundColor: Colors.transparent,
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Text(
-            "User Details.",
+            "User Details",
             style: GoogleFonts.aDLaMDisplay(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,
-                color: Colors.teal),
+                color: Colors.indigo),
           ),
         ),
       ),
@@ -44,16 +44,20 @@ controller.signOut(context);
                         "idUser":data["id"]
                       });
                     },
-                    title: Text(data["name"],style: TextStyle(fontSize: 22,fontWeight: FontWeight.w500),),
-                    subtitle:Text( data["email"],style: TextStyle(fontSize: 17,fontWeight: FontWeight.w400),),
+                    title: Text(data["name"],style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+                    subtitle:Text( data["email"],style: TextStyle(fontSize: 14,fontWeight: FontWeight.w400),),
                     leading: Container(
                       height: 56,
                       width: 56,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(56),
-                        // child: CachedNetworkImage(
-                        //     fit: BoxFit.cover,
-                        //     imageUrl: data["imageUrl"]),
+                        child:data["profileUrl"]==""?CircleAvatar(
+                          radius: 45,
+                          backgroundImage:
+                          AssetImage("assets/images/user.png"),
+                        ): CachedNetworkImage(
+                            fit: BoxFit.cover,
+                            imageUrl: data["profileUrl"]),
                       ),
                     ),
                   ),

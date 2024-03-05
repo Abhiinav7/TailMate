@@ -52,7 +52,7 @@ class AdminController extends ChangeNotifier {
 
   var imgUrl = " ";
 
-  Future addEvents(final imageName, XFile image) async {
+  Future addEvents(final imageName, XFile image,BuildContext context) async {
     Reference referenceRoot = FirebaseStorage.instance.ref();
     Reference referenceDirImages =
     referenceRoot.child("Events");
@@ -70,7 +70,7 @@ class AdminController extends ChangeNotifier {
           description: discriptionController.text,
           imgUrl: imgUrl,
           time: tim.toString());
-      saveEvent(tim.toString(), eventData);
+      saveEvent(tim.toString(), eventData).then((value) => Navigator.pop(context)).then((value) => Navigator.pop(context));
     } on FirebaseException catch (error) {
       print(error.code);
     } on PlatformException catch (e) {
@@ -81,7 +81,7 @@ class AdminController extends ChangeNotifier {
   }
 
 
-  Future saveEvent(var time, EventModel eventModel) async {
+  Future saveEvent(var time, EventModel eventModel ) async {
     try {
       await FirebaseFirestore.instance.collection("events").doc(time).set(
           eventModel.toJson()).then((value) => dataClear());

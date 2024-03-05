@@ -20,7 +20,7 @@ class WishlistPets extends StatelessWidget {
         title: Container(
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Text(
-            "Wishlist.",
+            "Wishlist",
             style: GoogleFonts.aDLaMDisplay(
                 fontSize: 20,
                 fontWeight: FontWeight.w900,

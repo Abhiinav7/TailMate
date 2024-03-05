@@ -70,16 +70,6 @@ class UserPets extends StatelessWidget {
                           IconButton(onPressed: (){
                             Navigator.pushNamed(context, "/updatepet",
                                 arguments:
-                                // {
-                                // "age": data["age"],
-                                // "petName": data["petName"],
-                                // "breed": data["breed"],
-                                // "gender": data["gender"],
-                                // "imageUrl": data["imageUrl"],
-                                // "weight": data["weight"],
-                                // "discription": data["discription"],
-                                // "petType": data["petType"],
-                                // "time":data["time"]
                                 data.data()
 
                               // }

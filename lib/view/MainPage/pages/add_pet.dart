@@ -16,7 +16,7 @@ class AddPetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final userController=Provider.of<UserController>(context);
+
     final petKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: MyAppbar(),
@@ -106,7 +106,6 @@ class AddPetScreen extends StatelessWidget {
                               );
                             },
                           );
-// controller.imagePickCamera();
                         } ,
                       ),
                       SizedBox(
@@ -223,7 +222,7 @@ class AddPetScreen extends StatelessWidget {
                         verticalPadding: 15,
                         validator: (value) => Validation.validateFields(value!),
                         controller: controller.petWeightController,
-                        keyboardType: TextInputType.name,
+                        keyboardType: TextInputType.number,
                         hintText: 'Enter pet weight',
                       ),
                       SizedBox(
@@ -247,7 +246,11 @@ class AddPetScreen extends StatelessWidget {
                                 petKey.currentState!.save();
                                 if (controller.img != null) {
                                   controller.addPetData(
-                                    imageName:controller.imageName,image: controller.files, userPhone:userController.userDetails["phone"], userName: userController.name,userId: userController.uid );
+                                    imageName:controller.imageName,
+                                      image: controller.files,
+                                      userPhone:userController.userDetails["phone"],
+                                      userName: userController.name,
+                                      userId: userController.uid );
                                   Fluttertoast.showToast(msg: "Pet added succesfully");
                                   controller.changeScreen(0);
                                   Navigator.pushNamed(context, "/main");

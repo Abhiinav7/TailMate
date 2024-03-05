@@ -103,11 +103,11 @@ class PetCardView extends StatelessWidget {
               ),
             ),
             floatingActionButton: data["userId"]==userController.uid? SizedBox():Container(
-                margin: EdgeInsets.all(12),
+                margin: EdgeInsets.all(7),
                 height: 50,
                 width: 150,
                 decoration: BoxDecoration(
-                    color: Colors.teal,
+                    color: Color(0xff265073),
                     borderRadius: BorderRadius.circular(12)
                 ),
                 child: TextButton(
