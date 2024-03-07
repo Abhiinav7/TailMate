@@ -21,8 +21,6 @@ class AdoptController extends ChangeNotifier{
      "ownerPhone":ownerPhone,
       'status': 'pending',
 
-     // You can update this status as needed
-      // Add any other relevant information about the request
     }).then((value)=>ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
         behavior: SnackBarBehavior.floating,
         content: Text("Adoption Enquiry sent")))).catchError((error) {

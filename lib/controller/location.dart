@@ -34,7 +34,5 @@ class LocationController extends ChangeNotifier{
       print("/////================///$err");
     }
 
-    // print(position);
-    // return position;
   }
 }

@@ -37,8 +37,6 @@ class ChatListPage extends StatelessWidget {
             itemBuilder: (context, index) {
               final data = snapshot.data!.docs[index];
               final datas=data.data() as Map<String,dynamic>;
-              // print("Adoption collection/chat list page");
-              // print(datas);
               return data['ownerId']==FirebaseAuth.instance.currentUser!.uid||data['senderId']==FirebaseAuth.instance.currentUser!.uid?
               Card(
                 elevation:3 ,
